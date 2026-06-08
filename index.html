@@ -643,6 +643,68 @@
       font-weight: 700;
     }
 
+    /* ============ 꿀팁 박스 ============ */
+    .tip-box {
+      margin: 14px 0 0;
+      padding: 16px 18px;
+      background: linear-gradient(135deg, #FFF8E0 0%, #FFEDB8 100%);
+      border-radius: 14px;
+    }
+    .tip-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+    .tip-icon {
+      font-size: 16px;
+      line-height: 1;
+    }
+    .tip-title {
+      font-size: 13.5px;
+      font-weight: 800;
+      color: var(--text-900);
+      letter-spacing: -0.02em;
+    }
+    .tip-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .tip-list li {
+      display: flex;
+      gap: 7px;
+      font-size: 13px;
+      line-height: 1.55;
+      color: var(--text-700);
+      margin-bottom: 8px;
+      letter-spacing: -0.02em;
+    }
+    .tip-list li:last-child {
+      margin-bottom: 0;
+    }
+    .tip-list .tip-num {
+      flex-shrink: 0;
+      font-weight: 700;
+      color: var(--text-900);
+    }
+    .tip-secret {
+      margin-top: 12px;
+      padding: 10px 12px;
+      background: rgba(255, 255, 255, 0.65);
+      border-radius: 10px;
+      font-size: 12px;
+      line-height: 1.55;
+      color: var(--text-700);
+      letter-spacing: -0.02em;
+    }
+    .tip-secret-link {
+      display: block;
+      margin-top: 4px;
+      font-size: 11.5px;
+      color: var(--text-500);
+    }
+
     /* 보상 카드 우측 미니 아이콘 */
     .reward-card {
       position: relative;
@@ -1236,6 +1298,20 @@
               </svg>
             </div>
           </div>
+          <div class="tip-box">
+            <div class="tip-header">
+              <span class="tip-title">이런 상황에서 전달해봐요!</span>
+            </div>
+            <ol class="tip-list">
+              <li><span class="tip-num">①</span><span>매장 POS기에서 주문 받을 때 전달하기</span></li>
+              <li><span class="tip-num">②</span><span>음료 제작 후, 컵홀더에 영수증 쿠폰을 끼워서 전달하기</span></li>
+              <li><span class="tip-num">③</span><span>미리 영수증 쿠폰을 10~50매 가량 뽑아두고, 주문하는 공간 및 픽업 공간에 올려두기</span></li>
+            </ol>
+            <div class="tip-secret">
+              매장에 홍보 포스터를 붙이면, 손님들이 더 관심을 가질 거예요 🤫
+              <span class="tip-secret-link">[패스오더 점주용 프로그램 &gt; 이벤트 관리 &gt; 시급 2배 챌린지 탭 &gt; 포스터 이미지 다운로드] 방법으로 다운로드 가능</span>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -1310,6 +1386,20 @@
                 <line x1="12" y1="16" x2="22" y2="16" stroke="#2A2A2A" stroke-width="1.5"/>
                 <line x1="12" y1="20" x2="18" y2="20" stroke="#FF6B00" stroke-width="2"/>
               </svg>
+            </div>
+          </div>
+          <div class="tip-box">
+            <div class="tip-header">
+              <span class="tip-title">이런 상황에서 전달해봐요!</span>
+            </div>
+            <ol class="tip-list">
+              <li><span class="tip-num">①</span><span>매장 POS기에서 주문 받을 때 전달하기</span></li>
+              <li><span class="tip-num">②</span><span>음료 제작 후, 컵홀더에 영수증 쿠폰을 끼워서 전달하기</span></li>
+              <li><span class="tip-num">③</span><span>미리 영수증 쿠폰을 10~50매 가량 뽑아두고, 주문하는 공간 및 픽업 공간에 올려두기</span></li>
+            </ol>
+            <div class="tip-secret">
+              매장에 홍보 포스터를 붙이면, 손님들이 더 관심을 가질 거예요 🤫
+              <span class="tip-secret-link">[패스오더 점주용 프로그램 &gt; 이벤트 관리 &gt; 시급 2배 챌린지 탭 &gt; 포스터 이미지 다운로드] 방법으로 다운로드 가능</span>
             </div>
           </div>
         </div>
