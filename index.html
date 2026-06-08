@@ -752,6 +752,100 @@
       line-height: 1.7;
     }
 
+    /* ============ 시급 2배 챌린지 자세히 알아보기 버튼 ============ */
+    .learn-more-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      width: 100%;
+      margin-top: 16px;
+      padding: 14px 16px;
+      background: var(--accent);
+      border: none;
+      border-radius: 12px;
+      color: #FFFFFF;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+      box-shadow: 0 2px 6px rgba(255, 107, 0, 0.25);
+    }
+    .learn-more-btn:hover { background: #E55E00; }
+    .learn-more-btn:active { transform: scale(0.98); }
+
+    /* ============ 모바일 QR 카드 (PC 전용) ============ */
+    .mobile-qr-card {
+      background: #FFFFFF;
+      border: 1px solid #EAEAEA;
+      border-radius: 14px;
+      margin-bottom: 16px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    }
+    .mobile-qr-card summary {
+      list-style: none;
+      padding: 14px 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      user-select: none;
+    }
+    .mobile-qr-card summary::-webkit-details-marker { display: none; }
+    .mobile-qr-icon {
+      width: 22px;
+      height: 22px;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+    .mobile-qr-title {
+      flex: 1;
+      font-size: 14.5px;
+      font-weight: 700;
+      color: var(--text-900);
+      letter-spacing: -0.02em;
+    }
+    .mobile-qr-arrow {
+      color: var(--accent);
+      font-size: 12px;
+      transition: transform 0.25s;
+    }
+    .mobile-qr-card[open] .mobile-qr-arrow {
+      transform: rotate(180deg);
+    }
+    .mobile-qr-body {
+      padding: 8px 18px 22px;
+      text-align: center;
+      border-top: 1px dashed #F0E0D0;
+    }
+    .mobile-qr-desc {
+      font-size: 13px;
+      color: var(--text-500);
+      line-height: 1.6;
+      margin: 14px 0 16px;
+    }
+    .qr-wrap {
+      display: flex;
+      justify-content: center;
+      padding: 12px;
+      background: #FFFFFF;
+      border-radius: 10px;
+    }
+    .qr-wrap #qr-code {
+      display: inline-block;
+      padding: 12px;
+      background: #FFFFFF;
+      border: 1.5px solid #EAEAEA;
+      border-radius: 8px;
+    }
+    .qr-wrap #qr-code img {
+      display: block;
+    }
+
     /* ============ 내 참여코드 찾기 ============ */
     .find-code-btn {
       width: 100%;
@@ -949,6 +1043,8 @@
       opacity: 0.4;
     }
   </style>
+  <!-- QR 코드 라이브러리 (PC 모바일 진입용) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
 <body>
   <div class="wrap">
@@ -1037,6 +1133,29 @@
     <!-- 본문 -->
     <div class="content">
 
+      <!-- 모바일로 접속하기 (PC에서만 표시) -->
+      <details class="mobile-qr-card" id="mobile-qr-card" style="display:none;">
+        <summary>
+          <div class="mobile-qr-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
+              <line x1="12" y1="18" x2="12.01" y2="18"/>
+            </svg>
+          </div>
+          <span class="mobile-qr-title">모바일로 접속하고 싶다면?</span>
+          <span class="mobile-qr-arrow">▼</span>
+        </summary>
+        <div class="mobile-qr-body">
+          <p class="mobile-qr-desc">
+            아래 QR 코드를 휴대폰 카메라로 스캔하면<br>
+            모바일에서 바로 접속할 수 있어요
+          </p>
+          <div class="qr-wrap">
+            <div id="qr-code"></div>
+          </div>
+        </div>
+      </details>
+
       <!-- 보상 안내 카드 -->
       <section class="card reward-card">
         <svg class="reward-mini" viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg">
@@ -1063,13 +1182,19 @@
           <span class="reward-num">3</span>
           <div class="reward-text"><span class="strong">손님 한 명당 1,500원</span> 현금 지급</div>
         </div>
+        <a href="https://passorder.kr/Oa8B0jHM" target="_blank" rel="noopener" class="learn-more-btn" id="btn-learn-more">
+          <span>시급 2배 챌린지 더 자세히 알아보기</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"/>
+          </svg>
+        </a>
       </section>
 
       <!-- 절차 (등록 미완료 - 4단계) -->
       <section class="outer-card" id="full-flow" style="display:none;">
         <div class="outer-card-head">
-          <h3 class="outer-card-title">처음이라면 4단계로 끝</h3>
-          <p class="outer-card-sub">다음부터는 30초면 출력할 수 있어요</p>
+          <h3 class="outer-card-title">나만의 영수증 쿠폰 출력 방법</h3>
+          <p class="outer-card-sub">1분도 안 걸려요! 미리 해두고, 손님이 물어보면 바로 전달드려요!</p>
         </div>
 
         <div class="inner-card">
@@ -1340,7 +1465,7 @@
 
   </div>
 
-  <!-- ============ 페이지 초기 표시 ============ -->
+  <!-- ============ 페이지 초기 표시 + 디바이스 분기 ============ -->
   <script>
     (function() {
       // URL 파라미터 없이도 자연스럽게 보이도록 placeholder 채우기
@@ -1353,11 +1478,53 @@
       document.querySelectorAll('[data-code]').forEach(el => { el.textContent = DEFAULT_CODE; });
 
       // 초기 화면: 4단계 절차 (미등록 기준) 표시
-      // 검색 후 알바 선택 시 segment에 따라 분기됨 (검색 로직에서 처리)
       const fullFlow = document.getElementById('full-flow');
       const quickFlow = document.getElementById('quick-flow');
       if (fullFlow) fullFlow.style.display = '';
       if (quickFlow) quickFlow.style.display = 'none';
+
+      // ─── PC/모바일 감지 ───
+      function isMobileDevice() {
+        // User Agent + 터치 + 화면 너비 종합 판단
+        const ua = navigator.userAgent || '';
+        const mobileUA = /Mobi|Android|iPhone|iPad|iPod|Windows Phone|BlackBerry|webOS|Opera Mini/i.test(ua);
+        return mobileUA;
+      }
+
+      // ─── PC면 모바일 QR 카드 표시 ───
+      const qrCard = document.getElementById('mobile-qr-card');
+      if (qrCard && !isMobileDevice()) {
+        qrCard.style.display = '';
+
+        // 모바일 진입용 URL 생성: 현재 channel 값에 _mo 붙임
+        const url = new URL(window.location.href);
+        const currentChannel = url.searchParams.get('channel') || 'direct';
+        url.searchParams.set('channel', currentChannel + '_mo');
+        const mobileUrl = url.toString();
+
+        // QR 코드 생성 (카드 펼칠 때 한 번만)
+        let qrGenerated = false;
+        qrCard.addEventListener('toggle', function() {
+          if (this.open && !qrGenerated) {
+            const qrEl = document.getElementById('qr-code');
+            if (qrEl && typeof QRCode !== 'undefined') {
+              try {
+                new QRCode(qrEl, {
+                  text: mobileUrl,
+                  width: 180,
+                  height: 180,
+                  colorDark: '#2A2A2A',
+                  colorLight: '#FFFFFF',
+                  correctLevel: QRCode.CorrectLevel.M
+                });
+                qrGenerated = true;
+              } catch (e) {
+                qrEl.innerHTML = '<p style="color:#999;font-size:12px;">QR 코드를 불러올 수 없어요</p>';
+              }
+            }
+          }
+        });
+      }
     })();
   </script>
 
@@ -1405,7 +1572,7 @@
       // ══════════════════════════════════════════════════
       //  Apps Script 트래킹 URL (배포 후 교체)
       // ══════════════════════════════════════════════════
-      const TRACKING_URL = 'https://script.google.com/macros/s/AKfycbzfXRyRXTSvHr1KhrANTzh9e34Ih9CQoVqAlpnHv8dguh6bNLYqc5aZ5dJMdNF9SVox/exec';
+      const TRACKING_URL = 'https://script.google.com/macros/s/AKfycbwBhgDpwnnHNbmfC0sN-AqBMzOVAOVQUlmNSkMsc13ieRTKUXiuqSnpvTAKH5NJs4gR/exec';
 
       // ─── URL 파라미터: channel만 ───
       const urlParams = new URLSearchParams(window.location.search);
@@ -1468,6 +1635,14 @@
 
       // ─── 페이지 진입 이벤트 ───
       trackEvent('PAGE_VIEW');
+
+      // ─── 시급 2배 챌린지 자세히 알아보기 클릭 ───
+      const btnLearnMore = document.getElementById('btn-learn-more');
+      if (btnLearnMore) {
+        btnLearnMore.addEventListener('click', function() {
+          trackEvent('LEARN_MORE_CLICK');
+        });
+      }
 
       // ─── 모달 열기/닫기 ───
       function openModal() {
