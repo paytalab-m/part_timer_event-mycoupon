@@ -643,28 +643,6 @@
       font-weight: 700;
     }
 
-    /* ============ 강조 카드 (흰색 카드) ============ */
-    .highlight-card {
-      background: var(--card);
-      padding: 26px 24px;
-      border-radius: var(--r-card);
-      margin-bottom: 14px;
-      text-align: center;
-      box-shadow: 0 8px 20px rgba(255, 143, 0, 0.20);
-    }
-    .highlight-card .label {
-      font-size: 13px;
-      color: var(--text-700);
-      font-weight: 600;
-      margin-bottom: 6px;
-    }
-    .highlight-card .big {
-      font-size: 22px;
-      font-weight: 800;
-      color: var(--accent);
-      letter-spacing: -0.02em;
-    }
-
     /* 보상 카드 우측 미니 아이콘 */
     .reward-card {
       position: relative;
@@ -675,17 +653,6 @@
       right: 22px;
       width: 56px;
       height: 56px;
-    }
-
-    /* 강조 카드 미니 아이콘 */
-    .highlight-card {
-      position: relative;
-    }
-    .highlight-mini {
-      width: 64px;
-      height: 64px;
-      margin: 0 auto 10px;
-      display: block;
     }
 
     /* ============ FAQ ============ */
@@ -1156,39 +1123,7 @@
         </div>
       </details>
 
-      <!-- 보상 안내 카드 -->
-      <section class="card reward-card">
-        <svg class="reward-mini" viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg">
-          <ellipse cx="28" cy="50" rx="20" ry="3" fill="#000" opacity="0.08"/>
-          <ellipse cx="28" cy="42" rx="20" ry="6" fill="#FFB800" stroke="#2A2A2A" stroke-width="2"/>
-          <rect x="8" y="34" width="40" height="10" fill="#FFB800"/>
-          <line x1="8" y1="34" x2="8" y2="44" stroke="#2A2A2A" stroke-width="2"/>
-          <line x1="48" y1="34" x2="48" y2="44" stroke="#2A2A2A" stroke-width="2"/>
-          <ellipse cx="28" cy="34" rx="20" ry="6" fill="#FFD84D" stroke="#2A2A2A" stroke-width="2"/>
-          <circle cx="28" cy="18" r="14" fill="#FFD84D" stroke="#2A2A2A" stroke-width="2"/>
-          <text x="28" y="24" text-anchor="middle" font-family="Pretendard, sans-serif" font-size="16" font-weight="900" fill="#2A2A2A">₩</text>
-        </svg>
-        <h3>시급 2배 챌린지란?</h3>
-        <p class="sub">모든 비용은 패스오더가 전액 부담해요</p>
-        <div class="reward-row">
-          <span class="reward-num">1</span>
-          <div class="reward-text">손님에게 영수증 쿠폰 전달하고</div>
-        </div>
-        <div class="reward-row">
-          <span class="reward-num">2</span>
-          <div class="reward-text">손님이 패스오더 첫 주문 완료 시</div>
-        </div>
-        <div class="reward-row">
-          <span class="reward-num">3</span>
-          <div class="reward-text"><span class="strong">손님 한 명당 1,500원</span> 현금 지급</div>
-        </div>
-        <a href="https://passorder.kr/Oa8B0jHM" target="_blank" rel="noopener" class="learn-more-btn" id="btn-learn-more">
-          <span>시급 2배 챌린지 더 자세히 알아보기</span>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="9 18 15 12 9 6"/>
-          </svg>
-        </a>
-      </section>
+
 
       <!-- 절차 (등록 미완료 - 4단계) -->
       <section class="outer-card" id="full-flow" style="display:none;">
@@ -1380,22 +1315,38 @@
         </div>
       </section>
 
-      <!-- 하단 강조 -->
-      <section class="highlight-card">
-        <svg class="highlight-mini" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-          <ellipse cx="32" cy="58" rx="20" ry="3" fill="#000" opacity="0.10"/>
-          <rect x="22" y="48" width="20" height="6" rx="1" fill="#E89C4A" stroke="#2A2A2A" stroke-width="2"/>
-          <rect x="26" y="44" width="12" height="6" fill="#FFB800" stroke="#2A2A2A" stroke-width="2"/>
-          <path d="M18 14 L46 14 L44 36 Q44 44 32 44 Q20 44 20 36 Z" fill="#FFD84D" stroke="#2A2A2A" stroke-width="2.5" stroke-linejoin="round"/>
-          <path d="M18 18 L12 18 Q8 18 8 22 L8 26 Q8 30 12 30 L18 30" fill="none" stroke="#2A2A2A" stroke-width="2.5"/>
-          <path d="M46 18 L52 18 Q56 18 56 22 L56 26 Q56 30 52 30 L46 30" fill="none" stroke="#2A2A2A" stroke-width="2.5"/>
-          <text x="32" y="34" text-anchor="middle" font-family="Pretendard, sans-serif" font-size="14" font-weight="900" fill="#2A2A2A">★</text>
-          <circle cx="8" cy="10" r="2" fill="#FF6B00"/>
-          <circle cx="56" cy="8" r="2" fill="#FFB800"/>
-          <circle cx="58" cy="40" r="1.5" fill="#FF6B00"/>
+      <!-- 보상 안내 카드 -->
+      <section class="card reward-card">
+        <svg class="reward-mini" viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="28" cy="50" rx="20" ry="3" fill="#000" opacity="0.08"/>
+          <ellipse cx="28" cy="42" rx="20" ry="6" fill="#FFB800" stroke="#2A2A2A" stroke-width="2"/>
+          <rect x="8" y="34" width="40" height="10" fill="#FFB800"/>
+          <line x1="8" y1="34" x2="8" y2="44" stroke="#2A2A2A" stroke-width="2"/>
+          <line x1="48" y1="34" x2="48" y2="44" stroke="#2A2A2A" stroke-width="2"/>
+          <ellipse cx="28" cy="34" rx="20" ry="6" fill="#FFD84D" stroke="#2A2A2A" stroke-width="2"/>
+          <circle cx="28" cy="18" r="14" fill="#FFD84D" stroke="#2A2A2A" stroke-width="2"/>
+          <text x="28" y="24" text-anchor="middle" font-family="Pretendard, sans-serif" font-size="16" font-weight="900" fill="#2A2A2A">₩</text>
         </svg>
-        <div class="label">손님이 패스오더 첫 주문 완료하면</div>
-        <div class="big">손님 한 명당 1,500원 지급</div>
+        <h3>시급 2배 챌린지란?</h3>
+        <p class="sub">모든 비용은 패스오더가 전액 부담해요</p>
+        <div class="reward-row">
+          <span class="reward-num">1</span>
+          <div class="reward-text">손님에게 영수증 쿠폰 전달하고</div>
+        </div>
+        <div class="reward-row">
+          <span class="reward-num">2</span>
+          <div class="reward-text">손님이 패스오더 첫 주문 완료 시</div>
+        </div>
+        <div class="reward-row">
+          <span class="reward-num">3</span>
+          <div class="reward-text"><span class="strong">손님 한 명당 1,500원</span> 현금 지급</div>
+        </div>
+        <a href="https://passorder.kr/Oa8B0jHM" target="_blank" rel="noopener" class="learn-more-btn" id="btn-learn-more">
+          <span>시급 2배 챌린지 더 자세히 알아보기</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"/>
+          </svg>
+        </a>
       </section>
 
       <!-- FAQ -->
