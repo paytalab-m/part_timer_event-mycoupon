@@ -705,6 +705,41 @@
       color: var(--text-500);
     }
 
+    /* ============ 라이브 토스트 (글래스모피즘) ============ */
+    .live-toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      z-index: 9990;
+      padding: 11px 20px;
+      background: rgba(255, 255, 255, 0.65);
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px) saturate(180%);
+      border-radius: 100px;
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      font-size: 12.5px;
+      color: var(--text-900);
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      max-width: calc(100% - 32px);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .live-toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+    .live-toast .toast-amount {
+      color: var(--accent);
+      font-weight: 800;
+    }
+
     /* 보상 카드 우측 미니 아이콘 */
     .reward-card {
       position: relative;
@@ -1506,9 +1541,17 @@
 
   </div>
 
-  <!-- ============ 페이지 초기 표시 + 디바이스 분기 ============ -->
+  <!-- ============ 페이지 초기 표시 + 디바이스 분기 + 버전 분기 ============ -->
   <script>
     (function() {
+      // ─── URL channel 파라미터 → 버전 결정 ───
+      // channel에 '2' 포함 → 2번 버전 (콘텐츠 후기형, 추후 구현)
+      // 그 외 → 1번 버전 (현재 기본, 단계 설명형)
+      const urlParams = new URLSearchParams(window.location.search);
+      const channelParam = urlParams.get('channel') || '';
+      const pageVersion = channelParam.includes('2') ? 2 : 1;
+      window.__PAGE_VERSION__ = pageVersion;  // 다른 스크립트에서 참조용
+
       // URL 파라미터 없이도 자연스럽게 보이도록 placeholder 채우기
       const DEFAULT_STORE = '매장명';
       const DEFAULT_NICKNAME = '닉네임';
@@ -1571,6 +1614,11 @@
 
   <!-- 토스트 컨테이너 -->
   <div class="toast-container" id="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- 라이브 토스트 (1번 버전 전용) -->
+  <div class="live-toast" id="live-toast" aria-hidden="true">
+    <span id="live-toast-text"></span>
+  </div>
 
   <!-- ============ 참여코드 찾기 모달 ============ -->
   <div class="modal-overlay" id="search-modal" aria-hidden="true">
@@ -1809,6 +1857,97 @@
           closeModal();
         }
       });
+    })();
+  </script>
+
+  <!-- ============ 라이브 토스트 (1번/2번 공통) ============ -->
+  <script>
+    (function() {
+      // 더미 데이터 (staff-data.js 못 로드된 미리보기 환경 fallback)
+      const DUMMY_DATA = [
+        { n: '민호', s: '컴포즈커피 강남역점', g: '미등록' },
+        { n: '지은', s: '메가커피 홍대점', g: '활동중' },
+        { n: '서연', s: '이디야커피 잠실점', g: '활동중' },
+        { n: '도윤', s: '빽다방 신촌점', g: '미시작' },
+        { n: '하준', s: '텐퍼센트커피 종로점', g: '활동중' },
+        { n: '예준', s: '메가커피 부산서면점', g: '활동중' },
+        { n: '시우', s: '컴포즈커피 분당정자점', g: '미등록' },
+        { n: '주원', s: '커피빈 명동점', g: '활동중' },
+        { n: '서윤', s: '투썸플레이스 광화문점', g: '미시작' },
+        { n: '윤서', s: '이디야커피 인천구월점', g: '활동중' },
+      ];
+
+      const STAFF_DATA = (window.STAFF_DATA && window.STAFF_DATA.length > 0)
+        ? window.STAFF_DATA
+        : DUMMY_DATA;
+
+      const toast = document.getElementById('live-toast');
+      const textEl = document.getElementById('live-toast-text');
+      if (!toast || !textEl) return;
+
+      // ─── 매장명 마스킹: "컴포즈커피 광화문시대점" → "컴포즈커피 **매장" ───
+      function maskStore(storeName) {
+        if (!storeName) return '** 매장';
+        const trimmed = String(storeName).trim();
+        const parts = trimmed.split(/\s+/);
+        return parts[0] + ' **매장';
+      }
+
+      // ─── 닉네임 마스킹: "이민호" → "이*호" ───
+      function maskNickname(nick) {
+        if (!nick) return '***';
+        const n = String(nick).trim();
+        const chars = Array.from(n); // 한글/이모지 안전 처리
+        const len = chars.length;
+        if (len <= 1) return chars[0] + '*';
+        if (len === 2) return chars[0] + '*';
+        if (len === 3) return chars[0] + '*' + chars[2];
+        return chars[0] + '**' + chars[len - 1];
+      }
+
+      // ─── 1,500원 단위 랜덤 금액 (1,500 ~ 7,500) ───
+      function randomAmount() {
+        const multiplier = Math.floor(Math.random() * 5) + 1;
+        return multiplier * 1500;
+      }
+
+      function formatNumber(n) {
+        return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      }
+
+      let lastIdx = -1;
+      function showNext() {
+        let idx;
+        if (STAFF_DATA.length === 1) {
+          idx = 0;
+        } else {
+          do {
+            idx = Math.floor(Math.random() * STAFF_DATA.length);
+          } while (idx === lastIdx);
+        }
+        lastIdx = idx;
+
+        const staff = STAFF_DATA[idx];
+        const amount = randomAmount();
+
+        textEl.innerHTML =
+          '[' + maskStore(staff.s) + ' ' +
+          maskNickname(staff.n) + ' 알바 ' +
+          '<span class="toast-amount">' + formatNumber(amount) + '원</span>' +
+          ' 시급 추가]';
+
+        toast.classList.add('show');
+
+        setTimeout(function() {
+          toast.classList.remove('show');
+        }, 3500);
+      }
+
+      // 첫 표시는 1.5초 후, 그 후 5초 간격
+      setTimeout(function() {
+        showNext();
+        setInterval(showNext, 5000);
+      }, 1500);
     })();
   </script>
 
