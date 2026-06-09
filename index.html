@@ -705,6 +705,299 @@
       color: var(--text-500);
     }
 
+    /* ============ 2번 버전: 인터뷰 / 3번 버전: 랭킹 공통 ============ */
+    /* 스토리 헤더 카드 */
+    .story-card {
+      padding: 24px 22px 22px;
+      background: var(--card);
+      border-radius: var(--r-card);
+      margin-bottom: 14px;
+    }
+    .story-label {
+      display: inline-block;
+      padding: 5px 12px;
+      background: var(--accent);
+      color: #FFFFFF;
+      font-size: 11.5px;
+      font-weight: 700;
+      border-radius: 100px;
+      letter-spacing: -0.02em;
+      margin-bottom: 14px;
+    }
+    .story-headline {
+      font-size: 24px;
+      font-weight: 800;
+      line-height: 1.35;
+      letter-spacing: -0.03em;
+      color: var(--text-900);
+      margin: 0;
+    }
+    .story-headline .accent {
+      color: var(--accent);
+    }
+    .story-amount {
+      color: var(--accent);
+      font-weight: 900;
+      font-size: 28px;
+    }
+
+    /* 프로필 카드 (2번) */
+    .profile-card {
+      padding: 20px 22px;
+      background: var(--card);
+      border-radius: var(--r-card);
+      margin-bottom: 14px;
+      display: grid;
+      grid-template-columns: 64px 1fr;
+      grid-template-rows: auto auto;
+      gap: 14px;
+      align-items: center;
+    }
+    .profile-avatar {
+      grid-row: 1;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      overflow: hidden;
+      background: #FFE5B4;
+    }
+    .profile-avatar svg {
+      width: 100%;
+      height: 100%;
+    }
+    .profile-info {
+      grid-row: 1;
+    }
+    .profile-name {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--text-900);
+      letter-spacing: -0.02em;
+      margin-bottom: 4px;
+    }
+    .profile-meta {
+      font-size: 12.5px;
+      color: var(--text-500);
+      line-height: 1.5;
+    }
+    .profile-amount {
+      grid-column: 1 / -1;
+      grid-row: 2;
+      padding: 12px 14px;
+      background: linear-gradient(135deg, #FFF8E0 0%, #FFEDB8 100%);
+      border-radius: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .profile-amount-label {
+      font-size: 13px;
+      color: var(--text-700);
+      font-weight: 600;
+    }
+    .profile-amount-value {
+      font-size: 20px;
+      font-weight: 900;
+      color: var(--accent);
+      letter-spacing: -0.02em;
+    }
+
+    /* Q&A 카드 (2번/3번 공통) */
+    .qa-card {
+      padding: 20px 22px;
+      background: var(--card);
+      border-radius: var(--r-card);
+      margin-bottom: 14px;
+    }
+    .qa-q {
+      font-size: 15.5px;
+      font-weight: 800;
+      color: var(--text-900);
+      letter-spacing: -0.02em;
+      line-height: 1.5;
+      margin-bottom: 12px;
+      padding-bottom: 12px;
+      border-bottom: 1px dashed #EEEAE4;
+    }
+    .qa-a {
+      font-size: 14.5px;
+      color: var(--text-700);
+      line-height: 1.65;
+      letter-spacing: -0.02em;
+      word-break: keep-all;
+    }
+    .qa-image-placeholder {
+      margin-top: 14px;
+      padding: 28px 16px;
+      background: #F5F5F5;
+      border: 1px dashed #CCC;
+      border-radius: 12px;
+      text-align: center;
+    }
+    .image-placeholder-icon {
+      font-size: 32px;
+      margin-bottom: 8px;
+    }
+    .image-placeholder-text {
+      font-size: 12px;
+      color: var(--text-500);
+      line-height: 1.5;
+    }
+    .image-placeholder-text small {
+      font-size: 11px;
+      opacity: 0.8;
+    }
+
+    /* 한 달 기록 표 */
+    .record-table {
+      margin-top: 14px;
+      padding: 14px 16px;
+      background: linear-gradient(135deg, #FFF8E0 0%, #FFEDB8 100%);
+      border-radius: 12px;
+    }
+    .record-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      font-size: 13.5px;
+      color: var(--text-700);
+      font-weight: 600;
+      border-bottom: 1px dashed rgba(0, 0, 0, 0.08);
+    }
+    .record-row:last-child {
+      border-bottom: none;
+    }
+    .record-row.record-total {
+      margin-top: 4px;
+      padding-top: 12px;
+      border-top: 1.5px solid rgba(0, 0, 0, 0.15);
+      border-bottom: none;
+      font-weight: 800;
+      color: var(--text-900);
+      font-size: 14.5px;
+    }
+    .record-amount {
+      color: var(--accent);
+      font-weight: 800;
+    }
+    .record-row.record-total .record-amount {
+      font-size: 17px;
+    }
+
+    /* 꿀팁 리스트 (Q&A 내부) */
+    .qa-tip-list {
+      margin: 12px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+    .qa-tip-list li {
+      display: flex;
+      gap: 10px;
+      padding: 12px 0;
+      border-bottom: 1px dashed #EEEAE4;
+      font-size: 13.5px;
+      line-height: 1.5;
+      color: var(--text-700);
+      letter-spacing: -0.02em;
+    }
+    .qa-tip-list li:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+    .qa-tip-num {
+      flex-shrink: 0;
+      font-weight: 700;
+      color: var(--text-900);
+      font-size: 14.5px;
+    }
+    .qa-tip-list strong {
+      display: block;
+      color: var(--text-900);
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+    .qa-tip-desc {
+      font-size: 12.5px;
+      color: var(--text-500);
+    }
+
+    /* 랭킹 리스트 (3번) */
+    .rank-list {
+      background: var(--card);
+      border-radius: var(--r-card);
+      padding: 8px 18px;
+      margin-bottom: 14px;
+    }
+    .rank-item {
+      display: grid;
+      grid-template-columns: 40px 1fr auto;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 0;
+      border-bottom: 1px dashed #EEEAE4;
+    }
+    .rank-item:last-child {
+      border-bottom: none;
+    }
+    .rank-badge {
+      font-size: 28px;
+      text-align: center;
+      line-height: 1;
+    }
+    .rank-num {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--text-500);
+    }
+    .rank-info {
+      min-width: 0;
+    }
+    .rank-name {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--text-900);
+      letter-spacing: -0.02em;
+      margin-bottom: 2px;
+    }
+    .rank-store {
+      font-size: 12px;
+      color: var(--text-500);
+      letter-spacing: -0.02em;
+    }
+    .rank-amount {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--accent);
+      letter-spacing: -0.02em;
+      white-space: nowrap;
+    }
+    .rank-gold, .rank-silver, .rank-bronze {
+      position: relative;
+    }
+    .rank-gold .rank-amount { font-size: 18px; }
+
+    /* 랭킹 CTA 강조 */
+    .rank-cta-card {
+      padding: 18px 20px;
+      background: linear-gradient(135deg, #FFF8E0 0%, #FFEDB8 100%);
+      border-radius: var(--r-card);
+      margin-bottom: 14px;
+      text-align: center;
+    }
+    .rank-cta-text {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--text-700);
+      letter-spacing: -0.02em;
+    }
+    .rank-cta-text strong {
+      color: var(--text-900);
+      font-weight: 800;
+      font-size: 15px;
+    }
+
     /* ============ 라이브 토스트 (글래스모피즘) ============ */
     .live-toast {
       position: fixed;
@@ -712,21 +1005,24 @@
       left: 50%;
       transform: translateX(-50%) translateY(20px);
       z-index: 9990;
-      padding: 11px 20px;
-      background: rgba(255, 255, 255, 0.65);
+      padding: 14px 22px;
+      background: rgba(255, 255, 255, 0.7);
       backdrop-filter: blur(16px) saturate(180%);
       -webkit-backdrop-filter: blur(16px) saturate(180%);
-      border-radius: 100px;
-      border: 1px solid rgba(255, 255, 255, 0.7);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-      font-size: 12.5px;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+      font-size: 14px;
       color: var(--text-900);
       font-weight: 500;
       letter-spacing: -0.02em;
-      max-width: calc(100% - 32px);
+      line-height: 1.4;
+      width: auto;
+      max-width: calc(100% - 40px);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      text-align: center;
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.5s ease, transform 0.5s ease;
@@ -1197,6 +1493,9 @@
     <!-- 본문 -->
     <div class="content">
 
+      <!-- ============ 1번 버전 콘텐츠 (단계 설명) ============ -->
+      <div id="content-version-1">
+
       <!-- 모바일로 접속하기 (PC에서만 표시) -->
       <details class="mobile-qr-card" id="mobile-qr-card" style="display:none;">
         <summary>
@@ -1537,6 +1836,193 @@
         </details>
         </div></section>
 
+      </div>
+      <!-- /1번 버전 콘텐츠 -->
+
+
+      <!-- ============ 2번 버전 콘텐츠 (실제 사례 인터뷰) ============ -->
+      <div id="content-version-2" style="display:none;">
+        <section class="story-card">
+          <div class="story-label">실제 알바 사례</div>
+          <h2 class="story-headline">
+            신청만 해뒀던 <span class="accent">꼬꼬모님</span>,<br>
+            4주만에 <span class="story-amount">+127,500원</span><br>
+            받았어요
+          </h2>
+        </section>
+
+        <section class="profile-card">
+          <div class="profile-avatar">
+            <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="40" cy="40" r="40" fill="#FFE5B4"/>
+              <circle cx="40" cy="32" r="14" fill="#FFFFFF"/>
+              <path d="M16 72 Q16 52 40 52 Q64 52 64 72 Z" fill="#FFFFFF"/>
+              <circle cx="35" cy="30" r="2" fill="#2A2A2A"/>
+              <circle cx="45" cy="30" r="2" fill="#2A2A2A"/>
+              <path d="M33 38 Q40 42 47 38" stroke="#2A2A2A" stroke-width="2" fill="none" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="profile-info">
+            <div class="profile-name">꼬꼬모님</div>
+            <div class="profile-meta">서울 강남구 W커피 매장 근무</div>
+            <div class="profile-meta">알바 경력 6개월차</div>
+          </div>
+          <div class="profile-amount">
+            <div class="profile-amount-label">4주 누적 적립</div>
+            <div class="profile-amount-value">+127,500원</div>
+          </div>
+        </section>
+
+        <section class="qa-card">
+          <div class="qa-q">Q. 시급 2배 챌린지, 어떻게 알게 됐어요?</div>
+          <div class="qa-a">"사장님이 알려주셨어요. 알림톡으로 오긴 했는데 그땐 잘 안 봤거든요... 근데 사장님이 \'시급 더 받을 수 있는 거 있다\'고 하니까 그제야 보게 됐어요"</div>
+        </section>
+
+        <section class="qa-card">
+          <div class="qa-q">Q. 신청만 해두고 안 했었던 이유가 있어요?</div>
+          <div class="qa-a">"솔직히 신청만 하면 되는 줄 알았어요. 그 다음에 뭘 해야 하는지 모르겠어서 그냥 그대로 둔 거예요. 막상 사장님 설명 들으니까 너무 간단해서 좀 허무했어요ㅎㅎ"</div>
+        </section>
+
+        <section class="qa-card">
+          <div class="qa-q">Q. 그래서 어떻게 시작하셨어요?</div>
+          <div class="qa-a">"사장님이 영수증 쿠폰 뽑는 법 알려주셔서, 처음엔 한두 장씩 손님께 전달했어요. 진짜 1분도 안 걸리더라구요. 진작에 할 걸 그랬다 싶었어요"</div>
+        </section>
+
+        <section class="qa-card">
+          <div class="qa-q">Q. 첫 주에 얼마나 들어왔어요?</div>
+          <div class="qa-a">"1주차에 19,500원 들어왔어요! 처음 입금 알림 받았을 때 진짜 신기했어요. 영수증 줬을 뿐인데 돈이 들어오니까..."</div>
+          <div class="qa-image-placeholder">
+            <div class="image-placeholder-icon">📱</div>
+            <div class="image-placeholder-text">앱 입금 알림 캡쳐<br><small>(실제 운영 시 교체)</small></div>
+          </div>
+        </section>
+
+        <section class="qa-card">
+          <div class="qa-q">Q. 4주차에는 총 얼마 적립됐어요?</div>
+          <div class="qa-a">"한 달 누적 127,500원이요! 시간이 갈수록 손님들도 자연스러워지고, 저도 익숙해져서 더 많이 전달하게 되더라구요"</div>
+          <div class="record-table">
+            <div class="record-row"><span>1주차</span><span class="record-amount">+19,500원</span></div>
+            <div class="record-row"><span>2주차</span><span class="record-amount">+31,500원</span></div>
+            <div class="record-row"><span>3주차</span><span class="record-amount">+33,000원</span></div>
+            <div class="record-row"><span>4주차</span><span class="record-amount">+43,500원</span></div>
+            <div class="record-row record-total"><span>4주 누적</span><span class="record-amount">+127,500원</span></div>
+          </div>
+        </section>
+
+        <section class="qa-card">
+          <div class="qa-q">Q. 본인만의 비결이 있다면 알려주세요!</div>
+          <div class="qa-a">"저는 3가지 방법으로 나눠 드려요:"</div>
+          <ol class="qa-tip-list">
+            <li><span class="qa-tip-num">①</span><div><strong>컵홀더에 끼워서 전달</strong><br><span class="qa-tip-desc">손님이 음료 받으면서 자연스럽게 봐요</span></div></li>
+            <li><span class="qa-tip-num">②</span><div><strong>미리 5~10장 출력해서 픽업대에 비치</strong><br><span class="qa-tip-desc">손님이 직접 가져가시기도 해요</span></div></li>
+            <li><span class="qa-tip-num">③</span><div><strong>단골 손님께는 직접 안내</strong><br><span class="qa-tip-desc">친한 분들이 더 잘 써주세요</span></div></li>
+          </ol>
+        </section>
+
+        <section class="qa-card">
+          <div class="qa-q">Q. 다른 알바한테 한 마디 한다면?</div>
+          <div class="qa-a">"신청만 해두고 안 하는 거 진짜 아까워요. 매일 영수증 한 장이면 되는데, 한 달 후엔 진짜 통장에 돈 들어와요! 안 할 이유가 없어요"</div>
+        </section>
+
+        <a href="https://passorder.kr/Oa8B0jHM" target="_blank" rel="noopener" class="learn-more-btn" id="btn-learn-more-v2">
+          <span>시급 2배 챌린지 더 자세히 알아보기</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"/>
+          </svg>
+        </a>
+      </div>
+      <!-- /2번 버전 콘텐츠 -->
+
+
+      <!-- ============ 3번 버전 콘텐츠 (랭킹) ============ -->
+      <div id="content-version-3" style="display:none;">
+        <section class="story-card">
+          <div class="story-label">이번 달 챌린지 랭킹</div>
+          <h2 class="story-headline">
+            시급 2배 챌린지로<br>
+            <span class="accent">가장 많이 받은</span><br>
+            <span class="story-amount">TOP 5</span>
+          </h2>
+        </section>
+
+        <section class="rank-list">
+          <div class="rank-item rank-gold">
+            <div class="rank-badge">🥇</div>
+            <div class="rank-info">
+              <div class="rank-name">쏙쏙님</div>
+              <div class="rank-store">광주 서구 W커피 매장</div>
+            </div>
+            <div class="rank-amount">+251,000원</div>
+          </div>
+          <div class="rank-item rank-silver">
+            <div class="rank-badge">🥈</div>
+            <div class="rank-info">
+              <div class="rank-name">혁이다님</div>
+              <div class="rank-store">대전 중구 C커피 매장</div>
+            </div>
+            <div class="rank-amount">+198,000원</div>
+          </div>
+          <div class="rank-item rank-bronze">
+            <div class="rank-badge">🥉</div>
+            <div class="rank-info">
+              <div class="rank-name">우솔님</div>
+              <div class="rank-store">서울 마포구 M카페</div>
+            </div>
+            <div class="rank-amount">+164,000원</div>
+          </div>
+          <div class="rank-item">
+            <div class="rank-badge"><span class="rank-num">4</span></div>
+            <div class="rank-info">
+              <div class="rank-name">꼬꼬모님</div>
+              <div class="rank-store">서울 강남구 W커피 매장</div>
+            </div>
+            <div class="rank-amount">+127,500원</div>
+          </div>
+          <div class="rank-item">
+            <div class="rank-badge"><span class="rank-num">5</span></div>
+            <div class="rank-info">
+              <div class="rank-name">밍밍님</div>
+              <div class="rank-store">인천 부평구 T커피 매장</div>
+            </div>
+            <div class="rank-amount">+102,500원</div>
+          </div>
+        </section>
+
+        <section class="rank-cta-card">
+          <p class="rank-cta-text">
+            <strong>다음 달 랭킹에 들고 싶다면?</strong><br>
+            지금 영수증 쿠폰 출력만 시작하면 돼요
+          </p>
+        </section>
+
+        <section class="qa-card">
+          <div class="qa-q">Q. 1위 쏙쏙님, 어떻게 1위 되셨어요?</div>
+          <div class="qa-a">"같이 근무하는 친구들한테도 추천했어요. 일은 이전과 똑같이 하는데 추가 수입 생긴 게 너무 좋고, 앱으로 주문하는 손님들이 늘어나니까 실수도 줄고 편해졌어요ㅎㅎ"</div>
+        </section>
+
+        <section class="qa-card">
+          <div class="qa-q">Q. 1위만의 비결이 있다면?</div>
+          <ol class="qa-tip-list">
+            <li><span class="qa-tip-num">①</span><div><strong>매장에 오시는 손님께 100% 안내</strong><br><span class="qa-tip-desc">안내만 해도 받아가는 분들이 많아요</span></div></li>
+            <li><span class="qa-tip-num">②</span><div><strong>음료 컵홀더에 항상 끼워서 전달</strong><br><span class="qa-tip-desc">전달률이 거의 100%예요</span></div></li>
+            <li><span class="qa-tip-num">③</span><div><strong>같이 일하는 동료에게도 공유</strong><br><span class="qa-tip-desc">매장 전체가 챌린지 참여하면 효과가 더 좋아요</span></div></li>
+          </ol>
+        </section>
+
+        <section class="qa-card">
+          <div class="qa-q">Q. 시작하려는 분들께 한 마디?</div>
+          <div class="qa-a">"안 하면 진짜 손해예요. 같은 시간 일하는데 누구는 받고 누구는 안 받고 차이가 너무 크거든요. 일단 한 번 해보세요!"</div>
+        </section>
+
+        <a href="https://passorder.kr/Oa8B0jHM" target="_blank" rel="noopener" class="learn-more-btn" id="btn-learn-more-v3">
+          <span>시급 2배 챌린지 더 자세히 알아보기</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"/>
+          </svg>
+        </a>
+      </div>
+      <!-- /3번 버전 콘텐츠 -->
+
     </div>
 
   </div>
@@ -1545,12 +2031,32 @@
   <script>
     (function() {
       // ─── URL channel 파라미터 → 버전 결정 ───
-      // channel에 '2' 포함 → 2번 버전 (콘텐츠 후기형, 추후 구현)
-      // 그 외 → 1번 버전 (현재 기본, 단계 설명형)
+      // channel에 '3' 포함 → 3번 (랭킹 콘텐츠)
+      // channel에 '2' 포함 → 2번 (실제 사례 콘텐츠)
+      // 그 외 → 1번 (단계 설명형 - 기본)
       const urlParams = new URLSearchParams(window.location.search);
       const channelParam = urlParams.get('channel') || '';
-      const pageVersion = channelParam.includes('2') ? 2 : 1;
-      window.__PAGE_VERSION__ = pageVersion;  // 다른 스크립트에서 참조용
+      // 강제 미리보기 (FORCE_VERSION이 1/2/3 중 하나면 그 버전으로 강제)
+      const forceVersion = window.FORCE_VERSION;
+      let pageVersion;
+      if (forceVersion === 1 || forceVersion === 2 || forceVersion === 3) {
+        pageVersion = forceVersion;
+      } else if (channelParam.includes('3')) {
+        pageVersion = 3;
+      } else if (channelParam.includes('2')) {
+        pageVersion = 2;
+      } else {
+        pageVersion = 1;
+      }
+      window.__PAGE_VERSION__ = pageVersion;
+
+      // 버전별 콘텐츠 표시/숨김
+      const content1 = document.getElementById('content-version-1');
+      const content2 = document.getElementById('content-version-2');
+      const content3 = document.getElementById('content-version-3');
+      if (content1) content1.style.display = (pageVersion === 1) ? '' : 'none';
+      if (content2) content2.style.display = (pageVersion === 2) ? '' : 'none';
+      if (content3) content3.style.display = (pageVersion === 3) ? '' : 'none';
 
       // URL 파라미터 없이도 자연스럽게 보이도록 placeholder 채우기
       const DEFAULT_STORE = '매장명';
@@ -1943,10 +2449,19 @@
         }, 3500);
       }
 
-      // 첫 표시는 1.5초 후, 그 후 5초 간격
+      // 다음 표시 예약 - 매번 랜덤 간격 (5~8초)
+      function scheduleNext() {
+        const delay = 5000 + Math.floor(Math.random() * 3000); // 5000ms ~ 8000ms
+        setTimeout(function() {
+          showNext();
+          scheduleNext();
+        }, delay);
+      }
+
+      // 첫 표시는 1.5초 후
       setTimeout(function() {
         showNext();
-        setInterval(showNext, 5000);
+        scheduleNext();
       }, 1500);
     })();
   </script>
