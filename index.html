@@ -2782,9 +2782,20 @@
         { n: '윤서', s: '이디야커피 인천구월점', g: '활동중' },
       ];
 
-      const STAFF_DATA = (window.STAFF_DATA && window.STAFF_DATA.length > 0)
+      const RAW_STAFF_DATA = (window.STAFF_DATA && window.STAFF_DATA.length > 0)
         ? window.STAFF_DATA
-        : DUMMY_DATA;
+        : DUMMY_  DATA;
+
+      // 활동중만 토스트 노출
+      const FILTERED_STAFF_DATA = RAW_STAFF_DATA.filter(function(item) {
+         return item.g === '활동중';
+      });
+
+      // 활동중 데이터가 있으면 활동중만 사용,
+      // 없으면 원본 데이터로 fallback해서 토스트는 계속 반복
+      const STAFF_DATA = FILTERED_STAFF_DATA.length > 0
+        ? FILTERED_STAFF_DATA
+        : RAW_STAFF_DATA;
 
       const toast = document.getElementById('live-toast');
       const textEl = document.getElementById('live-toast-text');
