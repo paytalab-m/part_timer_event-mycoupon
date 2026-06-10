@@ -862,14 +862,23 @@
       padding-bottom: 14px;
       border-bottom: 1px dashed #EEEAE4;
       display: flex;
-      gap: 8px;
-      align-items: flex-start;
+      gap: 10px;
+      align-items: center;
     }
     .qa-q::before {
-      content: 'Q.';
-      color: var(--accent);
+      content: 'P';
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
       font-weight: 900;
+      font-size: 14px;
       flex-shrink: 0;
+      line-height: 1;
     }
     .qa-q-text { flex: 1; }
     .qa-a {
@@ -879,15 +888,19 @@
       letter-spacing: -0.02em;
       word-break: keep-all;
       position: relative;
-      padding-left: 22px;
+      padding-left: 38px;
+      min-height: 28px;
     }
     .qa-a::before {
-      content: 'A.';
+      content: "";
       position: absolute;
       left: 0;
-      top: 0;
-      color: var(--accent);
-      font-weight: 900;
+      top: 2px;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #FFE5B4 url("images/profile.png") center/cover no-repeat;
+      flex-shrink: 0;
     }
 
     /* 인터뷰 강조 표시 */
@@ -2327,40 +2340,40 @@
           <div class="rank-item rank-gold">
             <div class="rank-badge">🥇</div>
             <div class="rank-info">
-              <div class="rank-name">쏙쏙님</div>
-              <div class="rank-store">서울 마포구 W커피 매장</div>
+              <div class="rank-name">만*</div>
+              <div class="rank-store">카페 ** 이유</div>
             </div>
             <div class="rank-amount">+251,000원</div>
           </div>
           <div class="rank-item rank-silver">
             <div class="rank-badge">🥈</div>
             <div class="rank-info">
-              <div class="rank-name">혁이다님</div>
-              <div class="rank-store">부산 해운대구 C커피 매장</div>
+              <div class="rank-name">짱*</div>
+              <div class="rank-store">발도스커피 도**점</div>
             </div>
             <div class="rank-amount">+198,000원</div>
           </div>
           <div class="rank-item rank-bronze">
             <div class="rank-badge">🥉</div>
             <div class="rank-info">
-              <div class="rank-name">우솔님</div>
-              <div class="rank-store">대구 중구 M카페</div>
+              <div class="rank-name">블**펀</div>
+              <div class="rank-store">벌크커피 대**점</div>
             </div>
             <div class="rank-amount">+164,000원</div>
           </div>
           <div class="rank-item">
             <div class="rank-badge"><span class="rank-num">4</span></div>
             <div class="rank-info">
-              <div class="rank-name">꼬꼬모님</div>
-              <div class="rank-store">서울 강남구 W커피 매장</div>
+              <div class="rank-name">좋***요</div>
+              <div class="rank-store">빽다방 장**점</div>
             </div>
             <div class="rank-amount">+127,500원</div>
           </div>
           <div class="rank-item">
             <div class="rank-badge"><span class="rank-num">5</span></div>
             <div class="rank-info">
-              <div class="rank-name">밍밍님</div>
-              <div class="rank-store">대전 서구 T커피 매장</div>
+              <div class="rank-name">마*쭈</div>
+              <div class="rank-store">트리플에이커피 봉**점</div>
             </div>
             <div class="rank-amount">+102,500원</div>
           </div>
@@ -2369,20 +2382,26 @@
         <!-- 인터뷰 안내 카드 -->
         <section class="rank-cta-card">
           <p class="rank-cta-text">
-            <strong>5월 추가 시급 1위<br>쏙쏙님과 인터뷰 해봤어요</strong>
+            <strong>5월 추가 시급 1위<br>만*님과 인터뷰 해봤어요</strong>
           </p>
         </section>
 
-        <!-- Q1: 시작 경위 (2번 Q1과 동일 톤) -->
+        <!-- Q1: 어떻게 참여 (단순 도입) -->
         <section class="qa-card">
-          <div class="qa-q"><span class="qa-q-text">시급 2배 챌린지, 어떻게 시작하게 되셨어요?</span></div>
-          <div class="qa-a"><span class="bd">알바하면서 추가로 돈도 벌 수 있다</span>길래 일단 신청해뒀어요. 그땐 그냥 <span class="hl">신청만 하면 끝나는 줄</span> 알았거든요. 손님한테 영수증 쿠폰 주는 거였는데, 그게 뭔지도 잘 몰랐고, 알바하면서 뭔가 해야 한다는 건 어렴풋이 알았는데 <span class="pt">정확히 뭘 어떻게 해야 하는지는 모르겠더라구요</span>.</div>
+          <div class="qa-q"><span class="qa-q-text">시급 2배 챌린지, 어떻게 참여하게 되셨어요?</span></div>
+          <div class="qa-a"><span class="bd">알바하면서 추가로 돈도 벌 수 있다</span>길래 일단 신청해뒀었어요. </div>
         </section>
 
-        <!-- Q2: 활동 방법 어디서 (2번 Q2와 동일 톤) -->
+        <!-- Q2: 신청 과정 어려움 (솔직 토로) -->
         <section class="qa-card">
-          <div class="qa-q"><span class="qa-q-text">그럼 활동 방법은 어디서 알게 되셨어요?</span></div>
-          <div class="qa-a">카카오톡이랑 메시지로 <span class="bd">활동 관련 내용을 많이 보내주더라구요</span>. 들어가서 확인해보니까 <span class="hl">어떻게 추가 시급 버는 건지 상세하게 설명되어 있어서</span> 이해하기 쉬웠어요. 그때부터는 <span class="pt">출근하면 영수증 쿠폰부터 뽑아두고 일 시작</span>해요.</div>
+          <div class="qa-q"><span class="qa-q-text">신청 과정에서 뭐 어려움은 없으셨어요?</span></div>
+          <div class="qa-a">사실 그땐 그냥 <span class="hl">신청만 하면 끝나는 줄</span> 알았거든요. 손님한테 영수증 쿠폰 주는 거였는데, 그게 뭔지도 잘 몰랐고, 알바하면서 뭔가 해야 한다는 건 어렴풋이 알았는데 <span class="pt">정확히 뭘 어떻게 해야 하는지를 몰라서</span> 일주일 정도 조금 늦었었어요. 그 때부터 했으면 더 많이 벌 수 있었을 텐데 살짝 아쉬워요 ㅎㅎ</div>
+        </section>
+
+        <!-- Q3: 활동 방법 어떻게 알게 됐나 (인지 흐름) -->
+        <section class="qa-card">
+          <div class="qa-q"><span class="qa-q-text">그럼 활동 방법은 어떻게 알게 되셨어요?</span></div>
+          <div class="qa-a">카카오톡이랑 메시지로 <span class="bd">활동 관련 내용을 많이 보내주더라구요</span>. 들어가서 확인해보니까 <span class="hl"> 신청하고 나서 어떻게 추가 시급 버는 건지 상세하게 설명되어 있어서</span> 이해하기 쉬웠어요. 그거 안 뒤로는 이제 <span class="pt">출근하면 영수증 쿠폰부터 뽑아두고 일 시작</span>해요.</div>
           <div class="qa-image-placeholder">
             <img src="images/katalk.png" alt="카톡 활동 안내 화면" class="qa-image" onerror="this.parentElement.classList.add('placeholder-fallback'); this.style.display='none'; this.nextElementSibling.style.display='block';">
             <div class="image-fallback">
@@ -2392,12 +2411,12 @@
           </div>
         </section>
 
-        <!-- Q3: 비결 (2번 Q5와 동일) -->
+        <!-- Q4: 비결 -->
         <section class="qa-card">
-          <div class="qa-q"><span class="qa-q-text">쏙쏙님만의 비결, 알려주세요!</span></div>
+          <div class="qa-q"><span class="qa-q-text">만*님만의 비결, 알려주세요!</span></div>
           <div class="qa-a">처음에는 그냥 <span class="hl">주문받으면서만 손님께 영수증을 드렸는데</span>, 그렇게 해서는 잘 안 받으시기도 했고 <span class="pt">실제로 성과도 안 나더라고요</span>. 그래서 다른 방법들을 시도해봤어요.</div>
           <div class="secret-box">
-            <div class="secret-box-title">쏙쏙님의 비밀 노하우</div>
+            <div class="secret-box-title">만*님의 비밀 노하우</div>
             <ol class="secret-tip-list">
               <li class="secret-tip-item">
                 <div class="secret-tip-content">
@@ -2436,7 +2455,7 @@
           </div>
         </section>
 
-        <!-- Q4: 한 마디 (2번 Q6와 동일) -->
+        <!-- Q5: 한 마디 -->
         <section class="qa-card">
           <div class="qa-q"><span class="qa-q-text">다른 알바들한테 한 마디 한다면?</span></div>
           <div class="qa-a">솔직히 진짜 <span class="hl">저만 알고 싶을 정도로 너무 좋은 이벤트</span>예요.<br><br>카페에서 알바하시는 분들은 진짜 무조건 참여하셔서 <span class="pt">같은 시간 일하고 돈 더 벌어가셨으면 좋겠어요</span>.</div>
@@ -2445,12 +2464,10 @@
         <!-- 인터뷰 끝나고 영수증 쿠폰 출력 유도 카드 -->
         <section class="rank-result-card">
           <p class="rank-result-text">
-            5월 1등 <span class="pt-strong">쏙쏙님의 노하우</span>를 듣고<br>
-            나도 같은 시간 일하고 <span class="pt-strong">추가로 251,000원</span> 벌고 싶다면?
+            <strong>만*님의 노하우 더 자세히 보려면 ↓</strong>
           </p>
           <p class="rank-result-cta">
-            👇 아래 방법으로 우선<br>
-            <strong>영수증 쿠폰부터 뽑아보기!</strong>
+            영수증 쿠폰 출력 방법은 아래에서 확인하세요
           </p>
         </section>
 
