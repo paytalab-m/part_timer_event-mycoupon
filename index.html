@@ -785,10 +785,26 @@
       border-radius: 50%;
       overflow: hidden;
       background: #FFE5B4;
+      position: relative;
+      flex-shrink: 0;
     }
-    .profile-avatar svg {
+    .profile-avatar img {
       width: 100%;
       height: 100%;
+      object-fit: cover;
+      display: block;
+      border-radius: 50%;
+    }
+    .profile-avatar-fallback {
+      display: none;
+      width: 100%;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #FFE5B4 0%, #FFC988 100%);
+      font-size: 30px;
+      position: absolute;
+      inset: 0;
     }
     .profile-info {
       grid-row: 1;
@@ -1173,6 +1189,41 @@
       font-weight: 800;
       font-size: 15px;
     }
+
+    /* 인터뷰 끝나고 영수증 쿠폰 출력 유도 카드 (3번) */
+    .rank-result-card {
+      padding: 22px 22px;
+      background: linear-gradient(135deg, #FFF4E0 0%, #FFE4C4 100%);
+      border-radius: var(--r-card);
+      margin-bottom: 14px;
+      text-align: center;
+      border: 1.5px solid #FFC9A0;
+    }
+    .rank-result-text {
+      margin: 0 0 12px;
+      font-size: 15px;
+      line-height: 1.65;
+      color: var(--text-700);
+      letter-spacing: -0.02em;
+    }
+    .rank-result-text .pt-strong {
+      color: var(--accent);
+      font-weight: 800;
+    }
+    .rank-result-cta {
+      margin: 0;
+      padding-top: 12px;
+      border-top: 1px dashed rgba(0, 0, 0, 0.1);
+      font-size: 14.5px;
+      line-height: 1.6;
+      color: var(--text-700);
+    }
+    .rank-result-cta strong {
+      color: var(--text-900);
+      font-weight: 800;
+      font-size: 16px;
+    }
+
 
     /* ============ 라이브 토스트 (글래스모피즘) ============ */
     .live-toast {
@@ -1796,9 +1847,6 @@
     <!-- 본문 -->
     <div class="content">
 
-      <!-- ============ 1번 버전 콘텐츠 (단계 설명) ============ -->
-      <div id="content-version-1">
-
       <!-- 모바일로 접속하기 (PC에서만 표시) -->
       <details class="mobile-qr-card" id="mobile-qr-card" style="display:none;">
         <summary>
@@ -1821,6 +1869,11 @@
           </div>
         </div>
       </details>
+
+
+      <!-- ============ 1번 버전 콘텐츠 (단계 설명) ============ -->
+      <div id="content-version-1">
+
 
 
 
@@ -2149,14 +2202,10 @@
         <!-- 프로필 카드 -->
         <section class="profile-card">
           <div class="profile-avatar">
-            <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="40" cy="40" r="40" fill="#FFE5B4"/>
-              <circle cx="40" cy="32" r="14" fill="#FFFFFF"/>
-              <path d="M16 72 Q16 52 40 52 Q64 52 64 72 Z" fill="#FFFFFF"/>
-              <circle cx="35" cy="30" r="2" fill="#2A2A2A"/>
-              <circle cx="45" cy="30" r="2" fill="#2A2A2A"/>
-              <path d="M33 38 Q40 42 47 38" stroke="#2A2A2A" stroke-width="2" fill="none" stroke-linecap="round"/>
-            </svg>
+            <img src="images/v2-profile.png" alt="꼬꼬모님 프로필" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="profile-avatar-fallback">
+              <span>👤</span>
+            </div>
           </div>
           <div class="profile-info">
             <div class="profile-name">꼬꼬모님</div>
@@ -2164,7 +2213,7 @@
             <div class="profile-meta">알바 경력 6개월차</div>
           </div>
           <div class="profile-amount">
-            <div class="profile-amount-label">4주 누적 적립</div>
+            <div class="profile-amount-label">한 달 동안 번 돈</div>
             <div class="profile-amount-value">+127,500원</div>
           </div>
         </section>
@@ -2172,12 +2221,12 @@
         <!-- Q1: 챌린지 인지 -->
         <section class="qa-card">
           <div class="qa-q"><span class="qa-q-text">시급 2배 챌린지, 어떻게 시작하게 되셨어요?</span></div>
-          <div class="qa-a">처음엔 <span class="hl">신청만 하면 끝나는 줄</span> 알았어요. 손님한테 영수증 쿠폰 주는 거였는데, 그땐 그게 뭔지도 잘 몰랐거든요. <span class="bd">알바하면서 뭔가 하긴 해야 한다는 거</span>는 어렴풋이 알았는데, <span class="pt">정확히 뭘 어떻게 해야 하는지는 모르겠더라구요</span>.</div>
+          <div class="qa-a"><span class="bd">알바하면서 추가로 돈도 벌 수 있다</span>길래 일단 신청해뒀어요. 그땐 그냥 <span class="hl">신청만 하면 끝나는 줄</span> 알았거든요. 손님한테 영수증 쿠폰 주는 거였는데, 그게 뭔지도 잘 몰랐고, 알바하면서 뭔가 해야 한다는 건 어렴풋이 알았는데 <span class="pt">정확히 뭘 어떻게 해야 하는지는 모르겠더라구요</span>.</div>
         </section>
 
         <!-- Q2: 어떻게 시작 -->
         <section class="qa-card">
-          <div class="qa-q"><span class="qa-q-text">그래서 어떻게 시작하게 되셨어요?</span></div>
+          <div class="qa-q"><span class="qa-q-text">그럼 활동 방법은 어디서 알게 되셨어요?</span></div>
           <div class="qa-a">카카오톡이랑 메시지로 <span class="bd">활동 관련 내용을 많이 보내주더라구요</span>. 들어가서 확인해보니까 <span class="hl">어떻게 추가 시급 버는 건지 상세하게 설명되어 있어서</span> 이해하기 쉬웠어요. 그때부터는 <span class="pt">출근하면 영수증 쿠폰부터 뽑아두고 일 시작</span>해요. <span class="hw">완전 루틴이에요 이제~</span></div>
           <div class="qa-image-placeholder">
             <img src="images/v2-katalk.png" alt="카톡 활동 안내 화면" class="qa-image" onerror="this.parentElement.classList.add('placeholder-fallback'); this.style.display='none'; this.nextElementSibling.style.display='block';">
@@ -2190,8 +2239,8 @@
 
         <!-- Q3: 첫 주 -->
         <section class="qa-card">
-          <div class="qa-q"><span class="qa-q-text">첫 주에 얼마나 적립됐어요?</span></div>
-          <div class="qa-a">1주차에 <span class="num">19,500원</span>이요! <span class="ul">영수증 쿠폰 13장</span> 정도 전달했나봐요. 처음 입금 알림 받았을 때 진짜 신기했어요. <span class="hw">"일하면서 영수증 한 장 줬을 뿐인데, 진짜 돈을 더 벌 수 있네?"</span> 싶었어요.</div>
+          <div class="qa-q"><span class="qa-q-text">활동 시작하고 첫 주에는 얼마나 벌었어요?</span></div>
+          <div class="qa-a">1주차에 <span class="num">19,500원</span>이요! 처음 입금 알림 받았을 때 진짜 신기했어요. <span class="hw">"일하면서 영수증 한 장 줬을 뿐인데, 진짜 돈을 더 벌 수 있네?"</span> 싶었어요.</div>
           <div class="qa-image-placeholder">
             <img src="images/v2-deposit.png" alt="앱 입금 알림 캡쳐" class="qa-image" onerror="this.parentElement.classList.add('placeholder-fallback'); this.style.display='none'; this.nextElementSibling.style.display='block';">
             <div class="image-fallback">
@@ -2203,29 +2252,29 @@
 
         <!-- Q4: 4주차 누적 -->
         <section class="qa-card">
-          <div class="qa-q"><span class="qa-q-text">4주차에는 총 얼마 적립됐어요?</span></div>
-          <div class="qa-a">한 달 누적 <span class="num">127,500원</span>이요! 시간이 갈수록 영수증 쿠폰 나눠주는 게 익숙해져서 <span class="pt">이제는 거의 루틴처럼</span> 하다보니, 받는 손님분들도 많고 <span class="hl">제가 받는 돈도 차곡차곡 쌓이더라구요</span>.<br><br>사실 카페 알바는 시급이 별로 안 높으니까 <span class="bd">다른 알바를 할까 고민을 많이 했었는데</span>, 이렇게 일하면서도 추가로 돈을 더 벌 수 있는 게 너무 좋아서 <span class="hw">여기서 계속 알바하려구요 ㅎㅎ</span></div>
+          <div class="qa-q"><span class="qa-q-text">한 달 동안 총 얼마나 벌었어요?</span></div>
+          <div class="qa-a">한 달 동안 총 <span class="num">127,500원</span>이요! 시간이 갈수록 영수증 쿠폰 나눠주는 게 익숙해져서 <span class="pt">이제는 거의 루틴처럼</span> 하다보니, 받는 손님분들도 많고 <span class="hl">제가 받는 돈도 차곡차곡 쌓이더라구요</span>.<br><br>사실 카페 알바는 시급이 별로 안 높으니까 <span class="bd">다른 알바를 할까 고민을 많이 했었는데</span>, 이렇게 일하면서도 추가로 돈을 더 벌 수 있는 게 너무 좋아서 <span class="hw">여기서 계속 알바하려구요 ㅎㅎ</span></div>
           <div class="record-table">
-            <div class="record-table-title">꼬꼬모님의 4주 적립 기록</div>
+            <div class="record-table-title">꼬꼬모님의 한 달 기록</div>
             <div class="record-row"><span>1주차</span><span class="record-amount">+19,500원</span></div>
             <div class="record-row"><span>2주차</span><span class="record-amount">+31,500원</span></div>
             <div class="record-row"><span>3주차</span><span class="record-amount">+33,000원</span></div>
             <div class="record-row"><span>4주차</span><span class="record-amount">+43,500원</span></div>
-            <div class="record-row record-total"><span>4주 누적</span><span class="record-amount">+127,500원</span></div>
+            <div class="record-row record-total"><span>한 달 동안 총</span><span class="record-amount">+127,500원</span></div>
           </div>
         </section>
 
         <!-- Q5: 비결 (디자인 강화) -->
         <section class="qa-card">
           <div class="qa-q"><span class="qa-q-text">꼬꼬모님만의 비결, 알려주세요!</span></div>
-          <div class="qa-a">처음에는 <span class="hl">그냥 손님께 영수증만 드렸는데</span>, 그게 가장 잘 안 되더라구요. 그래서 <span class="pt">3가지 방법</span>으로 바꿔봤어요:</div>
+          <div class="qa-a">처음에는 그냥 <span class="hl">주문받으면서만 손님께 영수증을 드렸는데</span>, 그렇게 해서는 잘 안 받으시기도 했고 <span class="pt">실제로 성과도 안 나더라고요</span>. 그래서 다른 방법들을 시도해봤어요.</div>
           <div class="secret-box">
             <div class="secret-box-title">꼬꼬모님의 비밀 노하우</div>
             <ol class="secret-tip-list">
               <li class="secret-tip-item">
                 <div class="secret-tip-content">
                   <div class="secret-tip-title">컵홀더에 같이 끼워주기</div>
-                  <div class="secret-tip-desc">음료 드릴 때 컵홀더에 영수증 쿠폰도 같이 끼워서 드리면 <span class="pt">손님들이 자연스럽게 받아가시더라구요</span>. 따로 안내 안 해도 돼서 진짜 편해요!</div>
+                  <div class="secret-tip-desc">음료 드릴 때 컵홀더에 영수증 쿠폰도 같이 끼워드리고, 살짝만 <span class="pt">"쿠폰도 챙겨드렸어요"</span>라고 안내하면 손님들이 잘 받아가시더라구요!</div>
                 </div>
                 <div class="secret-tip-image">
                   <img src="images/v2-tip-1.png" alt="컵홀더에 영수증 끼운 모습" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
@@ -2237,8 +2286,8 @@
               </li>
               <li class="secret-tip-item">
                 <div class="secret-tip-content">
-                  <div class="secret-tip-title">한가할 때 미리 뽑아두기</div>
-                  <div class="secret-tip-desc">바쁘면 한 장씩 뽑기 힘드니까 안 바쁠 때 미리 5~10장 정도 뽑아서 픽업대에 올려둬요. <span class="pt">손님들이 알아서 가져가세요</span>!</div>
+                  <div class="secret-tip-title">미리 10~50장 뽑아두기</div>
+                  <div class="secret-tip-desc">10~50장 정도 미리 뽑아서 챙겨둬요. 손님분들 많이 오실 때 <span class="pt">바로바로 드릴 수 있어서 좋더라구요</span>. 나중에는 키오스크랑 픽업대에도 두고 홍보했는데, 손님분들이 먼저 챙기시는 경우도 있더라구요!</div>
                 </div>
                 <div class="secret-tip-image">
                   <img src="images/v2-tip-2.png" alt="픽업대에 영수증 쌓아둔 모습" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
@@ -2250,13 +2299,13 @@
               </li>
               <li class="secret-tip-item">
                 <div class="secret-tip-content">
-                  <div class="secret-tip-title">단골 손님께 살짝 알려드리기</div>
-                  <div class="secret-tip-desc">단골 손님들한테는 한 번만 알려드리면 다음부터는 <span class="pt">알아서 챙기시더라구요</span>. 단골 많을수록 한 달 적립이 진짜 차이나요!</div>
+                  <div class="secret-tip-title">이벤트 홍보 포스터를 키오스크/주문대에 붙이기</div>
+                  <div class="secret-tip-desc">패스오더에서 제공해주는 이벤트 홍보 포스터를 인쇄해서 키오스크랑 주문대에 붙여뒀더니, <span class="pt">손님들이 이게 뭐냐고 먼저 물어봐주시더라구요</span>. 그때 쿠폰 드리면 참여 많이 하세요!</div>
                 </div>
                 <div class="secret-tip-image">
-                  <img src="images/v2-tip-3.png" alt="단골 손님께 안내하는 모습" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                  <img src="images/v2-tip-3.png" alt="포스터 키오스크에 붙인 모습" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                   <div class="img-fallback">
-                    <div class="img-fallback-icon">💁</div>
+                    <div class="img-fallback-icon">📋</div>
                     <div class="img-fallback-text">v2-tip-3.png</div>
                   </div>
                 </div>
@@ -2268,22 +2317,10 @@
         <!-- Q6: 한 마디 -->
         <section class="qa-card">
           <div class="qa-q"><span class="qa-q-text">다른 알바들한테 한 마디 한다면?</span></div>
-          <div class="qa-a">솔직히 진짜 <span class="hl">나만 알고 싶을 정도로 너무 좋은 이벤트</span>예요. 영수증 쿠폰 드리면 손님이 첫 주문하시고 <span class="pt">3일 정도 후면 바로 정산</span>돼서 들어오거든요. <span class="bd">한 달 기다리는 것도 아니라서 진짜 빨라요</span>!<br><br>카페에서 알바하시는 분들은 진짜 무조건 참여하셔서 <span class="pt">같은 시간 일하고 돈 더 벌어가셨으면 좋겠어요</span>. <span class="hw">진심으로요 ㅎㅎ</span></div>
-          <div class="qa-image-placeholder">
-            <img src="images/v2-staff.png" alt="알바 추천 인증" class="qa-image" onerror="this.parentElement.classList.add('placeholder-fallback'); this.style.display='none'; this.nextElementSibling.style.display='block';">
-            <div class="image-fallback">
-              <div class="image-placeholder-icon">👍</div>
-              <div class="image-placeholder-text">images/v2-staff.png<br><small>알바 추천 인증 (썸업 또는 인증샷)</small></div>
-            </div>
-          </div>
+          <div class="qa-a">솔직히 진짜 <span class="hl">저만 알고 싶을 정도로 너무 좋은 이벤트</span>예요. 영수증 쿠폰 드리면 손님이 첫 주문하시고 <span class="pt">3일 정도 후면 바로 정산</span>돼서 들어오거든요.<br><br>카페에서 알바하시는 분들은 진짜 무조건 참여하셔서 <span class="pt">같은 시간 일하고 돈 더 벌어가셨으면 좋겠어요</span>.</div>
         </section>
 
-        <a href="https://passorder.kr/Oa8B0jHM" target="_blank" rel="noopener" class="learn-more-btn" id="btn-learn-more-v2">
-          <span>시급 2배 챌린지 더 자세히 알아보기</span>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="9 18 15 12 9 6"/>
-          </svg>
-        </a>
+        <!-- full-flow 복제본이 여기로 동적 삽입됨 -->
       </div>
       <!-- /2번 버전 콘텐츠 -->
 
@@ -2297,7 +2334,7 @@
             <div class="rank-badge">🥇</div>
             <div class="rank-info">
               <div class="rank-name">쏙쏙님</div>
-              <div class="rank-store">광주 서구 W커피 매장</div>
+              <div class="rank-store">서울 마포구 W커피 매장</div>
             </div>
             <div class="rank-amount">+251,000원</div>
           </div>
@@ -2305,7 +2342,7 @@
             <div class="rank-badge">🥈</div>
             <div class="rank-info">
               <div class="rank-name">혁이다님</div>
-              <div class="rank-store">대전 중구 C커피 매장</div>
+              <div class="rank-store">부산 해운대구 C커피 매장</div>
             </div>
             <div class="rank-amount">+198,000원</div>
           </div>
@@ -2313,7 +2350,7 @@
             <div class="rank-badge">🥉</div>
             <div class="rank-info">
               <div class="rank-name">우솔님</div>
-              <div class="rank-store">서울 마포구 M카페</div>
+              <div class="rank-store">대구 중구 M카페</div>
             </div>
             <div class="rank-amount">+164,000원</div>
           </div>
@@ -2329,68 +2366,80 @@
             <div class="rank-badge"><span class="rank-num">5</span></div>
             <div class="rank-info">
               <div class="rank-name">밍밍님</div>
-              <div class="rank-store">인천 부평구 T커피 매장</div>
+              <div class="rank-store">대전 서구 T커피 매장</div>
             </div>
             <div class="rank-amount">+102,500원</div>
           </div>
         </section>
 
-        <!-- CTA 카드 -->
+        <!-- 인터뷰 안내 카드 -->
         <section class="rank-cta-card">
           <p class="rank-cta-text">
-            <strong>다음 달 랭킹에 들고 싶다면?</strong><br>
-            지금 영수증 쿠폰 출력만 시작하면 돼요
+            <strong>5월 추가 시급 1위<br>쏙쏙님과 인터뷰 해봤어요</strong>
           </p>
         </section>
 
-        <!-- 1위 인터뷰 Q1: 어떻게 1위? -->
+        <!-- Q1: 시작 경위 (2번 Q1과 동일 톤) -->
         <section class="qa-card">
-          <div class="qa-q"><span class="qa-q-text">1위 쏙쏙님, 어떻게 1위 되셨어요?</span></div>
-          <div class="qa-a">처음에는 저도 <span class="hl">신청만 해두고 그냥 잊고 있었어요</span>. 그런데 패스오더에서 <span class="bd">계속 활동 관련 알림이 오더라구요</span>. 그래서 들어가서 보니까 영수증 쿠폰만 잘 전달하면 되는 거였어요. <span class="pt">생각보다 너무 간단해서</span> <span class="hw">본격적으로 해보자!</span> 마음먹었어요.</div>
+          <div class="qa-q"><span class="qa-q-text">시급 2배 챌린지, 어떻게 시작하게 되셨어요?</span></div>
+          <div class="qa-a"><span class="bd">알바하면서 추가로 돈도 벌 수 있다</span>길래 일단 신청해뒀어요. 그땐 그냥 <span class="hl">신청만 하면 끝나는 줄</span> 알았거든요. 손님한테 영수증 쿠폰 주는 거였는데, 그게 뭔지도 잘 몰랐고, 알바하면서 뭔가 해야 한다는 건 어렴풋이 알았는데 <span class="pt">정확히 뭘 어떻게 해야 하는지는 모르겠더라구요</span>.</div>
         </section>
 
-        <!-- 1위 인터뷰 Q2: 비결 (디자인 강화) -->
+        <!-- Q2: 활동 방법 어디서 (2번 Q2와 동일 톤) -->
         <section class="qa-card">
-          <div class="qa-q"><span class="qa-q-text">1위만의 비결, 솔직히 알려주세요!</span></div>
-          <div class="qa-a">처음엔 저도 영수증을 그냥 손님께 드렸는데, <span class="hl">잘 안 받아가시더라구요</span>. 그래서 <span class="pt">3가지 방법</span>으로 바꿔봤어요. 진짜 이거 하나 바꾸니까 적립이 확 늘었어요.</div>
+          <div class="qa-q"><span class="qa-q-text">그럼 활동 방법은 어디서 알게 되셨어요?</span></div>
+          <div class="qa-a">카카오톡이랑 메시지로 <span class="bd">활동 관련 내용을 많이 보내주더라구요</span>. 들어가서 확인해보니까 <span class="hl">어떻게 추가 시급 버는 건지 상세하게 설명되어 있어서</span> 이해하기 쉬웠어요. 그때부터는 <span class="pt">출근하면 영수증 쿠폰부터 뽑아두고 일 시작</span>해요.</div>
+          <div class="qa-image-placeholder">
+            <img src="images/v3-katalk.png" alt="카톡 활동 안내 화면" class="qa-image" onerror="this.parentElement.classList.add('placeholder-fallback'); this.style.display='none'; this.nextElementSibling.style.display='block';">
+            <div class="image-fallback">
+              <div class="image-placeholder-icon">💬</div>
+              <div class="image-placeholder-text">images/v3-katalk.png<br><small>카톡 활동 안내 화면</small></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Q3: 비결 (2번 Q5와 동일) -->
+        <section class="qa-card">
+          <div class="qa-q"><span class="qa-q-text">쏙쏙님만의 비결, 알려주세요!</span></div>
+          <div class="qa-a">처음에는 그냥 <span class="hl">주문받으면서만 손님께 영수증을 드렸는데</span>, 그렇게 해서는 잘 안 받으시기도 했고 <span class="pt">실제로 성과도 안 나더라고요</span>. 그래서 다른 방법들을 시도해봤어요.</div>
           <div class="secret-box">
-            <div class="secret-box-title">쏙쏙님의 1위 비밀 노하우</div>
+            <div class="secret-box-title">쏙쏙님의 비밀 노하우</div>
             <ol class="secret-tip-list">
               <li class="secret-tip-item">
                 <div class="secret-tip-content">
-                  <div class="secret-tip-title">매장 오시는 손님 100% 안내</div>
-                  <div class="secret-tip-desc">한 분도 안 빼고 영수증 쿠폰 안내드려요. <span class="pt">안내만 해도 받아가는 분들이 정말 많아요</span>.</div>
+                  <div class="secret-tip-title">컵홀더에 같이 끼워주기</div>
+                  <div class="secret-tip-desc">음료 드릴 때 컵홀더에 영수증 쿠폰도 같이 끼워드리고, 살짝만 <span class="pt">"쿠폰도 챙겨드렸어요"</span>라고 안내하면 손님들이 잘 받아가시더라구요!</div>
                 </div>
                 <div class="secret-tip-image">
-                  <img src="images/v3-tip-1.png" alt="손님께 안내하는 모습" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                  <img src="images/v3-tip-1.png" alt="컵홀더에 영수증 끼운 모습" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                   <div class="img-fallback">
-                    <div class="img-fallback-icon">🙋</div>
+                    <div class="img-fallback-icon">☕</div>
                     <div class="img-fallback-text">v3-tip-1.png</div>
                   </div>
                 </div>
               </li>
               <li class="secret-tip-item">
                 <div class="secret-tip-content">
-                  <div class="secret-tip-title">음료 컵홀더에 항상 끼워서 전달</div>
-                  <div class="secret-tip-desc">손님이 따로 챙길 필요 없이 음료 받으면 자연스럽게 봐주세요. <span class="pt">전달률이 거의 100%예요</span>.</div>
+                  <div class="secret-tip-title">미리 10~50장 뽑아두기</div>
+                  <div class="secret-tip-desc">10~50장 정도 미리 뽑아서 챙겨둬요. 손님분들 많이 오실 때 <span class="pt">바로바로 드릴 수 있어서 좋더라구요</span>. 나중에는 키오스크랑 픽업대에도 두고 홍보했는데, 손님분들이 먼저 챙기시는 경우도 있더라구요!</div>
                 </div>
                 <div class="secret-tip-image">
-                  <img src="images/v3-tip-2.png" alt="컵홀더에 영수증 끼운 모습" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                  <img src="images/v3-tip-2.png" alt="미리 뽑아둔 영수증 모습" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                   <div class="img-fallback">
-                    <div class="img-fallback-icon">☕</div>
+                    <div class="img-fallback-icon">🧾</div>
                     <div class="img-fallback-text">v3-tip-2.png</div>
                   </div>
                 </div>
               </li>
               <li class="secret-tip-item">
                 <div class="secret-tip-content">
-                  <div class="secret-tip-title">같이 일하는 동료에게도 공유</div>
-                  <div class="secret-tip-desc">매장 전체 알바가 챌린지 참여하면 효과가 훨씬 좋아져요. <span class="pt">손님들이 일관되게 안내받으니까 더 잘 써주세요</span>.</div>
+                  <div class="secret-tip-title">이벤트 홍보 포스터를 키오스크/주문대에 붙이기</div>
+                  <div class="secret-tip-desc">패스오더에서 제공해주는 이벤트 홍보 포스터를 인쇄해서 키오스크랑 주문대에 붙여뒀더니, <span class="pt">손님들이 이게 뭐냐고 먼저 물어봐주시더라구요</span>. 그때 쿠폰 드리면 참여 많이 하세요!</div>
                 </div>
                 <div class="secret-tip-image">
-                  <img src="images/v3-tip-3.png" alt="동료와 공유하는 모습" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                  <img src="images/v3-tip-3.png" alt="포스터 키오스크에 붙인 모습" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                   <div class="img-fallback">
-                    <div class="img-fallback-icon">👥</div>
+                    <div class="img-fallback-icon">📋</div>
                     <div class="img-fallback-text">v3-tip-3.png</div>
                   </div>
                 </div>
@@ -2399,18 +2448,24 @@
           </div>
         </section>
 
-        <!-- 1위 인터뷰 Q3: 한 마디 -->
+        <!-- Q4: 한 마디 (2번 Q6와 동일) -->
         <section class="qa-card">
-          <div class="qa-q"><span class="qa-q-text">시작하려는 분들께 한 마디?</span></div>
-          <div class="qa-a"><span class="hl">안 하면 진짜 손해예요.</span> 같은 시간 일하는데 누구는 시급 더 받고 누구는 그냥 일하고. 차이가 너무 크거든요. <span class="bd">진짜 1분이면 시작할 수 있어요</span>. <span class="hw">일단 한 번 해보세요!</span></div>
+          <div class="qa-q"><span class="qa-q-text">다른 알바들한테 한 마디 한다면?</span></div>
+          <div class="qa-a">솔직히 진짜 <span class="hl">저만 알고 싶을 정도로 너무 좋은 이벤트</span>예요. 영수증 쿠폰 드리면 손님이 첫 주문하시고 <span class="pt">3일 정도 후면 바로 정산</span>돼서 들어오거든요.<br><br>카페에서 알바하시는 분들은 진짜 무조건 참여하셔서 <span class="pt">같은 시간 일하고 돈 더 벌어가셨으면 좋겠어요</span>.</div>
         </section>
 
-        <a href="https://passorder.kr/Oa8B0jHM" target="_blank" rel="noopener" class="learn-more-btn" id="btn-learn-more-v3">
-          <span>시급 2배 챌린지 더 자세히 알아보기</span>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="9 18 15 12 9 6"/>
-          </svg>
-        </a>
+        <!-- 인터뷰 끝나고 영수증 쿠폰 출력 유도 카드 -->
+        <section class="rank-result-card">
+          <p class="rank-result-text">
+            5월 1등 <span class="pt-strong">쏙쏙님의 노하우</span>를 듣고<br>
+            나도 같은 시간 일하고 <span class="pt-strong">추가로 251,000원</span> 벌고 싶다면?
+          </p>
+          <p class="rank-result-cta">
+            👇 아래 방법으로 우선<br>
+            <strong>영수증 쿠폰부터 뽑아보기!</strong>
+          </p>
+        </section>
+
       </div>
       <!-- /3번 버전 콘텐츠 -->
 
@@ -2456,6 +2511,40 @@
       if (content1) content1.style.display = (pageVersion === 1) ? '' : 'none';
       if (content2) content2.style.display = (pageVersion === 2) ? '' : 'none';
       if (content3) content3.style.display = (pageVersion === 3) ? '' : 'none';
+
+      // ─── full-flow를 2번/3번 콘텐츠 끝에 복제 추가 ───
+      // (인터뷰 끝나고 출력 방법 안내 카드가 자연스럽게 이어지도록)
+      const originalFullFlow = document.getElementById('full-flow');
+      const originalLearnMore = document.getElementById('btn-learn-more');
+      if (originalFullFlow) {
+        // 2번 콘텐츠 끝에 복제 추가
+        if (content2) {
+          const clone2 = originalFullFlow.cloneNode(true);
+          clone2.removeAttribute('id');
+          clone2.style.display = '';  // 항상 표시 (1번 분기 무관)
+          clone2.querySelectorAll('[id]').forEach(function(el) { el.removeAttribute('id'); });
+          content2.appendChild(clone2);
+          // 자세히 알아보기 버튼도 같이 복제
+          if (originalLearnMore) {
+            const btnClone2 = originalLearnMore.cloneNode(true);
+            btnClone2.removeAttribute('id');
+            content2.appendChild(btnClone2);
+          }
+        }
+        // 3번 콘텐츠 끝에 복제 추가
+        if (content3) {
+          const clone3 = originalFullFlow.cloneNode(true);
+          clone3.removeAttribute('id');
+          clone3.style.display = '';
+          clone3.querySelectorAll('[id]').forEach(function(el) { el.removeAttribute('id'); });
+          content3.appendChild(clone3);
+          if (originalLearnMore) {
+            const btnClone3 = originalLearnMore.cloneNode(true);
+            btnClone3.removeAttribute('id');
+            content3.appendChild(btnClone3);
+          }
+        }
+      }
 
       // URL 파라미터 없이도 자연스럽게 보이도록 placeholder 채우기
       const DEFAULT_STORE = '매장명';
@@ -2784,11 +2873,11 @@
 
       const RAW_STAFF_DATA = (window.STAFF_DATA && window.STAFF_DATA.length > 0)
         ? window.STAFF_DATA
-        : DUMMY_  DATA;
+        : DUMMY_DATA;
 
       // 활동중만 토스트 노출
       const FILTERED_STAFF_DATA = RAW_STAFF_DATA.filter(function(item) {
-         return item.g === '활동중';
+        return item.g === '활동중';
       });
 
       // 활동중 데이터가 있으면 활동중만 사용,
