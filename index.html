@@ -2279,8 +2279,7 @@
                 <div class="secret-tip-image">
                   <img src="images/tip-1.png" alt="컵홀더에 영수증 끼운 모습" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                   <div class="img-fallback">
-                    <div class="img-fallback-text">tip-1.png</div>
-                  </div>
+                    </div>
                 </div>
               </li>
               <li class="secret-tip-item">
@@ -2291,8 +2290,7 @@
                 <div class="secret-tip-image">
                   <img src="images/tip-2.png" alt="픽업대에 영수증 쌓아둔 모습" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                   <div class="img-fallback">
-                    <div class="img-fallback-text">tip-2.png</div>
-                  </div>
+                    </div>
                 </div>
               </li>
               <li class="secret-tip-item">
@@ -2303,8 +2301,7 @@
                 <div class="secret-tip-image">
                   <img src="images/tip-3.png" alt="포스터 키오스크에 붙인 모습" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                   <div class="img-fallback">
-                    <div class="img-fallback-text">tip-3.png</div>
-                  </div>
+                    </div>
                 </div>
               </li>
             </ol>
@@ -2410,8 +2407,7 @@
                 <div class="secret-tip-image">
                   <img src="images/tip-1.png" alt="컵홀더에 영수증 끼운 모습" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                   <div class="img-fallback">
-                    <div class="img-fallback-text">tip-1.png</div>
-                  </div>
+                    </div>
                 </div>
               </li>
               <li class="secret-tip-item">
@@ -2422,8 +2418,7 @@
                 <div class="secret-tip-image">
                   <img src="images/tip-2.png" alt="미리 뽑아둔 영수증 모습" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                   <div class="img-fallback">
-                    <div class="img-fallback-text">tip-2.png</div>
-                  </div>
+                    </div>
                 </div>
               </li>
               <li class="secret-tip-item">
@@ -2434,8 +2429,7 @@
                 <div class="secret-tip-image">
                   <img src="images/tip-3.png" alt="포스터 키오스크에 붙인 모습" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                   <div class="img-fallback">
-                    <div class="img-fallback-text">tip-3.png</div>
-                  </div>
+                    </div>
                 </div>
               </li>
             </ol>
@@ -2734,7 +2728,12 @@
         searchInput.value = '';
         renderResults('');
       }
-      if (btnFindCode) btnFindCode.addEventListener('click', openModal);
+      // 이벤트 위임: 페이지 어디에 있는 find-code-btn이든 모두 작동 (복제된 버튼 포함)
+      document.addEventListener('click', function(e) {
+        if (e.target.closest('.find-code-btn')) {
+          openModal();
+        }
+      });
       if (btnResearch) btnResearch.addEventListener('click', openModal);
       if (modalClose) modalClose.addEventListener('click', closeModal);
       modal.addEventListener('click', function(e) {
@@ -2793,7 +2792,10 @@
         document.querySelectorAll('[data-nickname]').forEach(el => { el.textContent = staff.n; });
 
         // 2. 참여코드 박스: 찾기 버튼 → 코드 표시로 전환
-        if (btnFindCode) btnFindCode.style.display = 'none';
+        // 모든 find-code-btn 숨김 (1번 페이지 quick-flow 모드)
+        document.querySelectorAll('.find-code-btn').forEach(function(btn) {
+          btn.style.display = 'none';
+        });
         if (codeFound) {
           codeFound.style.display = 'block';
           codeFoundNickname.textContent = staff.n;
