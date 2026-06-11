@@ -3303,13 +3303,16 @@
         searchInput.value = '';
         renderResults('');
       }
-      // 이벤트 위임: 페이지 어디에 있는 find-code-btn이든 모두 작동 (복제된 버튼 포함)
-      document.addEventListener('click', function(e) {
-        if (e.target.closest('.find-code-btn')) {
-          openModal();
-        }
-      });
-      if (btnResearch) btnResearch.addEventListener('click', openModal);
+    // 이벤트 위임: 원본/복제본의 find-code-btn, research-btn 모두 작동
+    document.addEventListener('click', function(e) {
+      if (e.target.closest('.find-code-btn')) {
+        openModal();
+      }
+    
+      if (e.target.closest('.research-btn')) {
+        openModal();
+      }
+    });
       if (modalClose) modalClose.addEventListener('click', closeModal);
       modal.addEventListener('click', function(e) {
         if (e.target === modal) closeModal();
@@ -3362,25 +3365,54 @@
 
       // ─── 알바 선택 시 페이지에 반영 ───
       function applyStaff(staff) {
-        // 1. 페이지 내 변수 주입 (data-store, data-nickname 모든 곳)
-        document.querySelectorAll('[data-store]').forEach(el => { el.textContent = staff.s; });
-        document.querySelectorAll('[data-nickname]').forEach(el => { el.textContent = staff.n; });
-
-        // 2. 참여코드 박스: 찾기 버튼 → 코드 표시로 전환
-        // 모든 find-code-btn 숨김 (1번 페이지 quick-flow 모드)
-        document.querySelectorAll('.find-code-btn').forEach(function(btn) {
-          btn.style.display = 'none';
+        const storeName = staff.s || '';
+        const nickname = staff.n || '';
+        const participationCode = staff.c || '';
+        const activityStatus = staff.g || '';
+      
+        // 1. 페이지 내 변수 주입
+        document.querySelectorAll('[data-store]').forEach(function(el) {
+          el.textContent = storeName;
         });
-        if (codeFound) {
-          codeFound.style.display = 'block';
-          codeFoundNickname.textContent = staff.n;
-          codeFoundValue.textContent = staff.c;
-        }
-
-        // 3. 세그먼트에 따라 절차 분기 전환 (미등록 vs 그 외)
-        const isUnreg = (staff.g === '미등록');
+      
+        document.querySelectorAll('[data-nickname]').forEach(function(el) {
+          el.textContent = nickname;
+        });
+      
+        document.querySelectorAll('[data-code]').forEach(function(el) {
+          el.textContent = participationCode;
+        });
+      
+        // 2. 원본/복제본 포함, 화면 안의 모든 참여코드 박스에 코드 반영
+        document.querySelectorAll('.code-callout').forEach(function(callout) {
+          const findBtn = callout.querySelector('.find-code-btn');
+          const codeFoundBox = callout.querySelector('.code-found');
+          const nicknameEl = callout.querySelector('.code-label span');
+          const codeEl = callout.querySelector('.code-val');
+      
+          if (findBtn) {
+            findBtn.style.display = 'none';
+          }
+      
+          if (codeFoundBox) {
+            codeFoundBox.style.display = 'block';
+          }
+      
+          if (nicknameEl) {
+            nicknameEl.textContent = nickname;
+          }
+      
+          if (codeEl) {
+            codeEl.textContent = participationCode;
+          }
+        });
+      
+        // 3. 세그먼트에 따라 1번 원본 영역만 분기 처리
+        // 버전2/3에 복제된 full-flow는 id가 제거되어 있으므로 그대로 노출됨
+        const isUnreg = (activityStatus === '미등록');
         const fullFlow = document.getElementById('full-flow');
         const quickFlow = document.getElementById('quick-flow');
+      
         if (fullFlow && quickFlow) {
           if (isUnreg) {
             fullFlow.style.display = '';
@@ -3390,20 +3422,29 @@
             quickFlow.style.display = '';
           }
         }
-
+      
+        // 4. 이벤트 기록
         trackEvent('FIND_CODE_SELECTED', {
-          storeName: staff.s,
-          nickname: staff.n,
-          participationCode: staff.c,
-          activityStatus: staff.g
+          storeName: storeName,
+          nickname: nickname,
+          participationCode: participationCode,
+          activityStatus: activityStatus
         });
-
+      
         closeModal();
-
-        // 코드 박스로 스크롤
-        setTimeout(() => {
-          const callout = document.getElementById('code-callout-area');
-          if (callout) callout.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      
+        // 5. 실제 화면에 보이는 참여코드 박스로 스크롤
+        setTimeout(function() {
+          const visibleCallout = Array.from(document.querySelectorAll('.code-callout')).find(function(el) {
+            return el.offsetParent !== null;
+          });
+      
+          if (visibleCallout) {
+            visibleCallout.scrollIntoView({
+              behavior: 'smooth',
+              block: 'center'
+            });
+          }
         }, 300);
       }
 
