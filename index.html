@@ -1478,7 +1478,7 @@
       font-weight: 600;
       margin: 0 0 4px;
     }
-    .code-found .code-label #code-found-nickname {
+    .code-found .code-label span {
       color: var(--accent);
       font-weight: 800;
     }
@@ -2499,7 +2499,7 @@
               </svg>
             </div>
           </div>
-          <div class="code-callout" id="code-callout-area">
+          <div class="code-callout code-callout-area" id="code-callout-area">
             <!-- 초기: 찾기 버튼 -->
             <button type="button" class="find-code-btn" id="btn-find-code">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -2510,8 +2510,8 @@
             </button>
             <!-- 찾기 완료 후: 코드 표시 (초기 숨김) -->
             <div class="code-found" id="code-found" style="display:none;">
-              <p class="code-label"><span id="code-found-nickname">닉네임</span> 알바님의 참여 코드</p>
-              <p class="code-val" id="code-found-value">0000-0000</p>
+              <p class="code-label"><span id="code-found-nickname" class="code-found-nickname">닉네임</span> 알바님의 참여 코드</p>
+              <p class="code-val code-found-value" id="code-found-value">0000-0000</p>
               <button type="button" class="research-btn" id="btn-research">다시 찾기</button>
             </div>
           </div>
@@ -3239,18 +3239,17 @@
 
       const modal = document.getElementById('search-modal');
       const modalClose = document.getElementById('modal-close');
-      const btnFindCode = document.getElementById('btn-find-code');
-      const btnResearch = document.getElementById('btn-research');
       const searchInput = document.getElementById('search-input');
       const searchResults = document.getElementById('search-results');
-      const codeFound = document.getElementById('code-found');
-      const codeFoundNickname = document.getElementById('code-found-nickname');
-      const codeFoundValue = document.getElementById('code-found-value');
+
+      // 마지막으로 누른 참여코드 박스 저장
+      // 버전2/3은 full-flow가 복제되어 id가 사라지므로, 클릭한 박스를 기준으로 먼저 업데이트합니다.
+      let lastCodeCallout = null;
 
       // ─── 트래킹 함수 ───
       function trackEvent(eventName, data) {
         if (!TRACKING_URL || TRACKING_URL.includes('PASTE_YOUR')) {
-          console.log('[track] TRACKING_URL not set, skip', eventName);
+          console.log('[track] TRACKING_URL not set, skip', eventName, data || {});
           return;
         }
         try {
@@ -3263,7 +3262,11 @@
             userAgent: navigator.userAgent || '',
             timestamp: new Date().toISOString()
           }, data || {});
-          const blob = new Blob([JSON.stringify(payload)], { type: 'text/plain;charset=utf-8' });
+
+          const blob = new Blob([JSON.stringify(payload)], {
+            type: 'text/plain;charset=utf-8'
+          });
+
           let sent = false;
           if (navigator.sendBeacon) {
             sent = navigator.sendBeacon(TRACKING_URL, blob);
@@ -3274,55 +3277,79 @@
               mode: 'no-cors',
               body: JSON.stringify(payload),
               keepalive: true
-            }).catch(() => {});
+            }).catch(function() {});
           }
-        } catch (e) { /* silent */ }
+        } catch (e) {
+          console.log('[track error]', e);
+        }
       }
+
+      // 다른 스크립트에서도 사용할 수 있게 열어둠
+      window.trackEvent = trackEvent;
 
       // ─── 페이지 진입 이벤트 ───
       trackEvent('PAGE_VIEW');
 
       // ─── 시급 2배 챌린지 자세히 알아보기 클릭 ───
-      const btnLearnMore = document.getElementById('btn-learn-more');
-      if (btnLearnMore) {
-        btnLearnMore.addEventListener('click', function() {
+      // 원본 버튼과 복제 버튼 모두 잡기 위해 이벤트 위임 사용
+      document.addEventListener('click', function(e) {
+        if (e.target.closest('.learn-more-btn')) {
           trackEvent('LEARN_MORE_CLICK');
-        });
-      }
+        }
+      });
 
       // ─── 모달 열기/닫기 ───
-      function openModal() {
+      function openModal(triggerEl) {
+        if (!modal || !searchInput) return;
+
+        if (triggerEl) {
+          lastCodeCallout = triggerEl.closest('.code-callout');
+        }
+
         modal.classList.add('show');
         modal.setAttribute('aria-hidden', 'false');
-        setTimeout(() => searchInput.focus(), 100);
+        setTimeout(function() {
+          searchInput.focus();
+        }, 100);
         trackEvent('FIND_CODE_OPEN');
       }
+
       function closeModal() {
+        if (!modal || !searchInput) return;
         modal.classList.remove('show');
         modal.setAttribute('aria-hidden', 'true');
         searchInput.value = '';
         renderResults('');
       }
-    // 이벤트 위임: 원본/복제본의 find-code-btn, research-btn 모두 작동
-    document.addEventListener('click', function(e) {
-      if (e.target.closest('.find-code-btn')) {
-        openModal();
-      }
-    
-      if (e.target.closest('.research-btn')) {
-        openModal();
-      }
-    });
-      if (modalClose) modalClose.addEventListener('click', closeModal);
-      modal.addEventListener('click', function(e) {
-        if (e.target === modal) closeModal();
+
+      // 이벤트 위임: 원본/복제본의 find-code-btn, research-btn 모두 작동
+      document.addEventListener('click', function(e) {
+        const findBtn = e.target.closest('.find-code-btn');
+        if (findBtn) {
+          openModal(findBtn);
+          return;
+        }
+
+        const researchBtn = e.target.closest('.research-btn');
+        if (researchBtn) {
+          openModal(researchBtn);
+          return;
+        }
       });
+
+      if (modalClose) modalClose.addEventListener('click', closeModal);
+      if (modal) {
+        modal.addEventListener('click', function(e) {
+          if (e.target === modal) closeModal();
+        });
+      }
 
       // ─── 검색 결과 렌더링 ───
       function renderResults(query) {
         const data = window.STAFF_DATA || [];
-        // 숫자만 추출
         const phone = (query || '').replace(/\D/g, '');
+
+        if (!searchResults) return;
 
         if (!phone || phone.length < 10) {
           searchResults.innerHTML = '<div class="result-empty"><div class="icon">🔍</div><div>휴대폰 번호 전체를 입력해주세요<br>(10~11자리 숫자)</div></div>';
@@ -3330,89 +3357,123 @@
         }
 
         // p 필드와 정확히 매칭
-        const matches = data.filter(item => item.p === phone);
+        const matches = data.filter(function(item) {
+          return String(item.p || '') === phone;
+        });
 
         if (matches.length === 0) {
           searchResults.innerHTML = '<div class="result-empty"><div class="icon">😢</div><div>일치하는 정보가 없어요.<br>번호를 다시 확인해 주세요.</div></div>';
-          // 검색 안 됨 이벤트는 별도 기록하지 않음 (필요 시 추가)
           return;
         }
 
-        searchResults.innerHTML = matches.map((item, idx) => `
-          <div class="result-item" data-idx="${idx}">
-            <p class="result-store">${escapeHtml(item.s)}</p>
-            <p class="result-info">
-              <span class="nickname">${escapeHtml(item.n)}</span> 알바님
-              · ${escapeHtml(item.m)}
-            </p>
-          </div>
-        `).join('');
+        searchResults.innerHTML = matches.map(function(item, idx) {
+          return `
+            <div class="result-item" data-idx="${idx}">
+              <p class="result-store">${escapeHtml(item.s || '')}</p>
+              <p class="result-info">
+                <span class="nickname">${escapeHtml(item.n || '')}</span> 알바님
+                · ${escapeHtml(item.m || '')}
+              </p>
+            </div>
+          `;
+        }).join('');
 
-        // 클릭 이벤트
-        searchResults.querySelectorAll('.result-item').forEach(el => {
+        searchResults.querySelectorAll('.result-item').forEach(function(el) {
           el.addEventListener('click', function() {
-            const idx = parseInt(this.dataset.idx);
+            const idx = parseInt(this.dataset.idx, 10);
             applyStaff(matches[idx]);
           });
         });
-
-        // 결과 표시 이벤트는 별도 기록하지 않음 (필요 시 추가)
       }
 
       function escapeHtml(s) {
-        return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+        return String(s).replace(/[&<>"']/g, function(c) {
+          return {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#39;'
+          }[c];
+        });
+      }
+
+      // ─── 참여코드 박스 1개 업데이트 ───
+      function updateCodeCallout(callout, staff) {
+        if (!callout || !staff) return;
+
+        const nickname = staff.n || '';
+        const participationCode = staff.c || '';
+
+        const findBtn = callout.querySelector('.find-code-btn');
+        const codeFoundBox = callout.querySelector('.code-found');
+        const nicknameEl = callout.querySelector('.code-found-nickname') || callout.querySelector('.code-label span');
+        const codeEl = callout.querySelector('.code-found-value') || callout.querySelector('.code-val');
+
+        if (findBtn) {
+          findBtn.style.display = 'none';
+        }
+
+        if (codeFoundBox) {
+          codeFoundBox.style.display = 'block';
+          codeFoundBox.removeAttribute('aria-hidden');
+        }
+
+        if (nicknameEl) {
+          nicknameEl.textContent = nickname;
+        }
+
+        if (codeEl) {
+          codeEl.textContent = participationCode;
+        }
       }
 
       // ─── 알바 선택 시 페이지에 반영 ───
       function applyStaff(staff) {
+        if (!staff) return;
+
         const storeName = staff.s || '';
         const nickname = staff.n || '';
         const participationCode = staff.c || '';
         const activityStatus = staff.g || '';
-      
+
+        console.log('[applyStaff selected]', {
+          storeName: storeName,
+          nickname: nickname,
+          participationCode: participationCode,
+          activityStatus: activityStatus
+        });
+
         // 1. 페이지 내 변수 주입
         document.querySelectorAll('[data-store]').forEach(function(el) {
           el.textContent = storeName;
         });
-      
+
         document.querySelectorAll('[data-nickname]').forEach(function(el) {
           el.textContent = nickname;
         });
-      
+
         document.querySelectorAll('[data-code]').forEach(function(el) {
           el.textContent = participationCode;
         });
-      
-        // 2. 원본/복제본 포함, 화면 안의 모든 참여코드 박스에 코드 반영
+
+        // 2. 참여코드 박스 업데이트
+        // 우선 실제 사용자가 누른 박스를 업데이트하고,
+        // 이후 원본/복제본 전체도 한 번 더 동기화합니다.
+        if (lastCodeCallout) {
+          updateCodeCallout(lastCodeCallout, staff);
+        }
+
         document.querySelectorAll('.code-callout').forEach(function(callout) {
-          const findBtn = callout.querySelector('.find-code-btn');
-          const codeFoundBox = callout.querySelector('.code-found');
-          const nicknameEl = callout.querySelector('.code-label span');
-          const codeEl = callout.querySelector('.code-val');
-      
-          if (findBtn) {
-            findBtn.style.display = 'none';
-          }
-      
-          if (codeFoundBox) {
-            codeFoundBox.style.display = 'block';
-          }
-      
-          if (nicknameEl) {
-            nicknameEl.textContent = nickname;
-          }
-      
-          if (codeEl) {
-            codeEl.textContent = participationCode;
-          }
+          updateCodeCallout(callout, staff);
         });
-      
+
         // 3. 세그먼트에 따라 1번 원본 영역만 분기 처리
         // 버전2/3에 복제된 full-flow는 id가 제거되어 있으므로 그대로 노출됨
         const isUnreg = (activityStatus === '미등록');
         const fullFlow = document.getElementById('full-flow');
         const quickFlow = document.getElementById('quick-flow');
-      
+
         if (fullFlow && quickFlow) {
           if (isUnreg) {
             fullFlow.style.display = '';
@@ -3422,7 +3483,7 @@
             quickFlow.style.display = '';
           }
         }
-      
+
         // 4. 이벤트 기록
         trackEvent('FIND_CODE_SELECTED', {
           storeName: storeName,
@@ -3430,15 +3491,17 @@
           participationCode: participationCode,
           activityStatus: activityStatus
         });
-      
+
         closeModal();
-      
+
         // 5. 실제 화면에 보이는 참여코드 박스로 스크롤
         setTimeout(function() {
-          const visibleCallout = Array.from(document.querySelectorAll('.code-callout')).find(function(el) {
-            return el.offsetParent !== null;
-          });
-      
+          const visibleCallout = lastCodeCallout && lastCodeCallout.offsetParent !== null
+            ? lastCodeCallout
+            : Array.from(document.querySelectorAll('.code-callout')).find(function(el) {
+                return el.offsetParent !== null;
+              });
+
           if (visibleCallout) {
             visibleCallout.scrollIntoView({
               behavior: 'smooth',
@@ -3449,17 +3512,19 @@
       }
 
       // ─── 입력 이벤트 ───
-      searchInput.addEventListener('input', function(e) {
-        let val = e.target.value;
-        // 숫자와 하이픈만 허용
-        val = val.replace(/[^\d-]/g, '');
-        e.target.value = val;
-        renderResults(val);
-      });
+      if (searchInput) {
+        searchInput.addEventListener('input', function(e) {
+          let val = e.target.value;
+          // 숫자와 하이픈만 허용
+          val = val.replace(/[^\d-]/g, '');
+          e.target.value = val;
+          renderResults(val);
+        });
+      }
 
       // ESC 키로 닫기
       document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && modal.classList.contains('show')) {
+        if (e.key === 'Escape' && modal && modal.classList.contains('show')) {
           closeModal();
         }
       });
